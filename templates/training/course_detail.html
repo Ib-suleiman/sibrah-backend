@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }} — SIBRAH Academy{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">{{ course.get_level_display }}</div>
+  <h1>{{ course.icon }} {{ course.title }}</h1>
+  <p>{{ course.description }}</p>
+</div>
+<section style="background:var(--light);padding:60px 2rem;">
+  <div style="max-width:680px;margin:0 auto;">
+    <div style="background:var(--gradient);border-radius:16px;padding:22px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;">
+        <div><span style="font-size:0.76rem;color:rgba(255,255,255,0.6);">Duration</span><br><strong style="color:#fff;">{{ course.duration }}</strong></div>
+        <div><span style="font-size:0.76rem;color:rgba(255,255,255,0.6);">Schedule</span><br><strong style="color:#fff;">{{ course.schedule|default:"Flexible" }}</strong></div>
+        <div><span style="font-size:0.76rem;color:rgba(255,255,255,0.6);">Tools</span><br><strong style="color:#fff;">{{ course.tools|default:"Various" }}</strong></div>
+      </div>
+      <div style="text-align:right;"><span style="font-size:0.76rem;color:rgba(255,255,255,0.6);">Course Fee</span><br><strong style="font-family:var(--font-display);color:var(--accent);font-size:1.5rem;">&#8358;{{ course.fee|floatformat:0 }}</strong></div>
+    </div>
+    {% if already_enrolled %}
+      {% with enr=enrollment_status %}
+      <div style="border-radius:14px;padding:20px;margin-bottom:20px;
+        {% if enr.status == 'completed' %}background:#dcfce7;border:1.5px solid #86efac;
+        {% elif enr.status == 'active' %}background:#dbeafe;border:1.5px solid #93c5fd;
+        {% elif enr.status == 'pending' %}background:#fef3c7;border:1.5px solid #fcd34d;
+        {% endif %}">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <div style="font-size:1.8rem;">
+            {% if enr.status == 'completed' %}🏆{% elif enr.status == 'active' %}📚{% else %}⏳{% endif %}
+          </div>
+          <div style="flex:1;">
+            <h4 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;margin-bottom:4px;
+              {% if enr.status == 'completed' %}color:#166534;
+              {% elif enr.status == 'active' %}color:#1d4ed8;
+              {% else %}color:#92400e;{% endif %}">
+              {% if enr.status == 'completed' %}
+                Course Completed!
+              {% elif enr.status == 'active' %}
+                Currently Enrolled
+              {% else %}
+                Enrollment Pending Payment
+              {% endif %}
+            </h4>
+            <p style="font-size:0.84rem;margin:0;
+              {% if enr.status == 'completed' %}color:#166534;
+              {% elif enr.status == 'active' %}color:#1d4ed8;
+              {% else %}color:#92400e;{% endif %}">
+              {% if enr.status == 'completed' %}
+                You have already completed this course. Check your certificates in your dashboard.
+              {% elif enr.status == 'active' %}
+                You are currently enrolled in this course. Track your progress in your dashboard.
+              {% else %}
+                You have a pending enrollment. Please complete your payment to activate your spot.
+              {% endif %}
+            </p>
+          </div>
+          {% if enr.status == 'pending' %}
+          <a href="{% url 'training:payment_instructions' enr.pk %}" class="btn-sibrah" style="font-size:0.84rem;">
+            <i class="fas fa-credit-card"></i> Complete Payment
+          </a>
+          {% else %}
+          <a href="{% url 'accounts:dashboard' %}" class="btn-sibrah" style="font-size:0.84rem;">
+            <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+          </a>
+          {% endif %}
+        </div>
+        {% if enr.status == 'active' or enr.status == 'completed' %}
+        <div style="margin-top:14px;">
+          <div style="font-size:0.78rem;margin-bottom:5px;
+            {% if enr.status == 'completed' %}color:#166534;{% else %}color:#1d4ed8;{% endif %}">
+            Progress: {{ enr.progress }}%
+          </div>
+          <div class="progress-sibrah">
+            <div class="fill" style="width:{{ enr.progress }}%;
+              {% if enr.status == 'completed' %}background:#16a34a;{% endif %}">
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% endwith %}
+    {% else %}
+    <div class="sibrah-card">
+      <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:20px;">Register for This Course</h3>
+      {% if user.is_authenticated %}
+      <p style="color:var(--muted);font-size:0.86rem;margin-bottom:20px;">Registering as <strong>{{ user.full_name }}</strong> ({{ user.email }})</p>
+      <form method="post">{% csrf_token %}
+        <div class="mb-4"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Schedule Preference</label><select name="schedule" class="form-select"><option value="weekdays">Weekdays (Mon–Fri)</option><option value="weekends">Weekends (Sat–Sun)</option><option value="online">Online / Virtual</option></select></div>
+        <button type="submit" class="btn-sibrah w-100" style="justify-content:center;"><i class="fas fa-user-plus"></i> Register &amp; Proceed to Payment</button>
+      </form>
+      {% else %}
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:20px;">Please log in or create a free account to enroll in this course.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-sibrah"><i class="fas fa-sign-in-alt"></i> Login to Enroll</a>
+        <a href="{% url 'accounts:register' %}" class="btn-sibrah-outline"><i class="fas fa-user-plus"></i> Create Free Account</a>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

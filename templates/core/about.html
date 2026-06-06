@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}About Us — SIBRAH{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">Our Story</div>
+  <h1>About SIBRAH Computers &amp; Technology Hub</h1>
+  <p>A leading ICT company dedicated to empowering individuals and organizations through technology in Abuja, Nigeria.</p>
+</div>
+<section style="background:#fff;padding:70px 2rem;">
+  <div style="max-width:820px;margin:0 auto;">
+    <div class="section-tag">Company Profile</div>
+    <h2 class="section-title mt-2 mb-4">Who We Are</h2>
+    <p style="color:var(--muted);line-height:1.85;margin-bottom:16px;">SIBRAH Computers and Technology Hub was founded with a clear mission: to provide accessible, high-quality ICT services that empower individuals and organizations to thrive in the digital age. Based in Abuja, Nigeria, we have grown to become one of the most trusted technology companies in the region.</p>
+    <p style="color:var(--muted);line-height:1.85;margin-bottom:16px;">Our services span the full ICT spectrum — from selling quality computers and accessories, to repairing and maintaining all types of devices, to developing custom software solutions for businesses, schools, and government institutions.</p>
+    <p style="color:var(--muted);line-height:1.85;">With a team of certified and experienced professionals, we deliver solutions that are reliable, scalable, and tailored to the unique needs of each client. Contact us at <strong style="color:var(--accent)">info@sibrahtech.com.ng</strong> or <strong style="color:var(--accent)">+234 808 110 1992</strong>.</p>
+  </div>
+</section>
+<section style="background:var(--light);padding:70px 2rem;">
+  <div class="container-fluid">
+    <div class="text-center mb-5"><div class="section-tag">Direction</div><h2 class="section-title mt-2">Vision &amp; Mission</h2></div>
+    <div class="row g-3">
+      <div class="col-md-4"><div class="sibrah-card h-100"><div style="font-size:2rem;margin-bottom:12px;">🎯</div><h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Our Vision</h3><p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">To become a globally recognized technology hub delivering innovative digital solutions that empower individuals, businesses, and communities across Africa.</p></div></div>
+      <div class="col-md-4"><div class="sibrah-card h-100"><div style="font-size:2rem;margin-bottom:12px;">🚀</div><h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Our Mission</h3><p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">To provide quality ICT services, training, and technology solutions that empower individuals and organizations to achieve their goals through the power of digital technology.</p></div></div>
+      <div class="col-md-4"><div class="sibrah-card h-100"><div style="font-size:2rem;margin-bottom:12px;">📋</div><h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Our Approach</h3><p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">We combine technical expertise with deep understanding of client needs to deliver customized, practical solutions that create real and measurable impact for every client we serve.</p></div></div>
+    </div>
+  </div>
+</section>
+<section style="background:var(--primary);padding:70px 2rem;">
+  <div class="container-fluid">
+    <div class="text-center mb-5"><div class="section-tag" style="background:rgba(0,212,170,0.1);">What Drives Us</div><h2 class="section-title mt-2" style="color:#fff;">Our Core Values</h2></div>
+    <div class="row g-3 justify-content-center">
+      {% for val in values %}<div class="col-md-2 col-4"><div style="background:var(--primary);border-radius:14px;padding:24px 16px;text-align:center;border:1px solid rgba(0,212,170,0.15);transition:all 0.3s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(0,212,170,0.15)'"><div style="font-size:1.8rem;margin-bottom:10px;">{{ val.icon }}</div><h4 style="font-family:var(--font-display);color:#fff;font-size:0.92rem;font-weight:700;margin:0;">{{ val.name }}</h4></div></div>{% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

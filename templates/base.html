@@ -1,0 +1,253 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}SIBRAH Computers & Technology Hub{% endblock %}</title>
+<meta name="description" content="{% block meta_desc %}SIBRAH Computers and Technology Hub — Empowering Businesses Through Technology, Innovation and Digital Solutions. Abuja, Nigeria.{% endblock %}">
+<link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+:root {
+  --primary: #0a2540;
+  --accent:  #00d4aa;
+  --accent2: #ff6b35;
+  --light:   #f8fafc;
+  --mid:     #e2e8f0;
+  --muted:   #64748b;
+  --gradient: linear-gradient(135deg, #0a2540 0%, #1a4a6e 60%, #0d3d5a 100%);
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+body { font-family: var(--font-body); background: var(--light); }
+/* NAV */
+.sibrah-nav { background: var(--primary); padding: 0 2rem; height: 65px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 999; border-bottom: 1px solid rgba(0,212,170,0.15); }
+.sibrah-logo { font-family: var(--font-display); color: #fff; text-decoration: none; font-size: 1rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.sibrah-logo .logo-box { width: 36px; height: 36px; background: var(--accent); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--primary); font-weight: 800; }
+.sibrah-logo span { color: var(--accent); }
+.nav-link-item { color: rgba(255,255,255,0.8) !important; font-size: 0.85rem; font-weight: 500; padding: 6px 12px !important; border-radius: 6px; transition: all 0.2s; }
+.nav-link-item:hover, .nav-link-item.active-link { color: var(--accent) !important; background: rgba(0,212,170,0.1); }
+.nav-cta-btn { background: var(--accent) !important; color: var(--primary) !important; font-weight: 700 !important; }
+.nav-cta-btn:hover { background: #00b896 !important; }
+/* MESSAGES */
+.messages-wrap { position: fixed; top: 75px; right: 16px; z-index: 9999; width: 340px; }
+.alert { border-radius: 12px; font-size: 0.88rem; }
+/* PAGE HERO */
+.page-hero { background: var(--gradient); padding: 80px 2rem 50px; text-align: center; }
+.page-hero h1 { font-family: var(--font-display); color: #fff; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; }
+.page-hero p  { color: rgba(255,255,255,0.65); font-size: 1rem; max-width: 580px; margin: 10px auto 0; }
+.section-tag  { display: inline-block; color: var(--accent); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 13px; background: rgba(0,212,170,0.08); border-radius: 100px; border: 1px solid rgba(0,212,170,0.2); margin-bottom: 10px; }
+.section-title { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--primary); }
+/* CARDS */
+.sibrah-card { background: #fff; border-radius: 16px; border: 1.5px solid var(--mid); padding: 28px; transition: all 0.3s; }
+.sibrah-card:hover { border-color: var(--accent); box-shadow: 0 16px 40px rgba(0,212,170,0.1); transform: translateY(-4px); }
+/* BUTTONS */
+.btn-sibrah { background: var(--accent); color: var(--primary); font-weight: 700; border: none; border-radius: 8px; padding: 11px 26px; font-family: var(--font-body); transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-sibrah:hover { background: #00b896; color: #fff; transform: translateY(-2px); }
+.btn-sibrah-outline { background: transparent; color: var(--primary); border: 1.5px solid var(--mid); border-radius: 8px; padding: 10px 22px; font-family: var(--font-body); font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-sibrah-outline:hover { border-color: var(--accent); color: var(--accent); }
+/* STATUS BADGES */
+.badge-pending   { background: #fef3c7; color: #92400e; border-radius: 100px; padding: 3px 10px; font-size: 0.72rem; font-weight: 700; }
+.badge-active    { background: #dcfce7; color: #166534; border-radius: 100px; padding: 3px 10px; font-size: 0.72rem; font-weight: 700; }
+.badge-completed { background: #dbeafe; color: #1d4ed8; border-radius: 100px; padding: 3px 10px; font-size: 0.72rem; font-weight: 700; }
+.badge-cancelled { background: #fee2e2; color: #dc2626; border-radius: 100px; padding: 3px 10px; font-size: 0.72rem; font-weight: 700; }
+/* FOOTER */
+.sibrah-footer { background: #060f1c; color: rgba(255,255,255,0.55); padding: 50px 2rem 24px; }
+.sibrah-footer h4 { font-family: var(--font-display); color: #fff; font-size: 0.95rem; margin-bottom: 14px; }
+.sibrah-footer a  { color: rgba(255,255,255,0.5); text-decoration: none; display: block; margin-bottom: 7px; font-size: 0.84rem; transition: color 0.2s; }
+.sibrah-footer a:hover { color: var(--accent); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 20px; font-size: 0.78rem; }
+/* WHATSAPP FLOAT */
+.wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 998; width: 52px; height: 52px; border-radius: 50%; background: #25d366; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: 0 6px 20px rgba(37,211,102,0.4); text-decoration: none; transition: all 0.3s; }
+.wa-float:hover { transform: scale(1.1); color: #fff; }
+/* PROGRESS BAR */
+.progress-sibrah { background: var(--mid); border-radius: 100px; height: 8px; overflow: hidden; }
+.progress-sibrah .fill { height: 100%; background: linear-gradient(90deg, var(--accent), #00a884); border-radius: 100px; }
+/* FORM INPUTS */
+.form-control:focus, .form-select:focus { border-color: var(--accent); box-shadow: 0 0 0 0.2rem rgba(0,212,170,0.15); }
+
+/* FILTER PILLS */
+.filter-pill{padding:8px 18px;border-radius:100px;border:1.5px solid var(--mid);background:#fff;color:var(--text);font-size:0.86rem;font-weight:500;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.filter-pill.active,.filter-pill:hover{background:var(--primary);color:var(--accent);border-color:var(--primary);}
+/* PRINT */
+@media print{.sibrah-nav,.sibrah-footer,.wa-float,.newsletter-bar{display:none!important;}}
+</style>
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="sibrah-nav">
+  <a class="sibrah-logo" href="{% url 'core:home' %}">
+    <img src="{% static 'sibrah_logo_nav.png' %}" alt="SIBRAH Logo"
+         style="width:42px;height:42px;object-fit:contain;border-radius:8px;filter:drop-shadow(0 2px 6px rgba(0,212,170,0.3));">
+    <div style="line-height:1.2;">
+      <div style="font-family:var(--font-display);color:#fff;font-size:0.95rem;font-weight:800;"><span style="color:var(--accent);">SIBRAH</span> Tech Hub</div>
+      <div style="font-size:0.65rem;color:rgba(255,255,255,0.5);letter-spacing:0.04em;">Computers &amp; Technology</div>
+    </div>
+  </a>
+  <button class="navbar-toggler d-md-none" type="button" id="navToggler" style="background:none;border:none;color:#fff;font-size:1.3rem;">
+    <i class="fas fa-bars"></i>
+  </button>
+  <div class="d-none d-md-flex align-items-center gap-1" id="navMenu">
+    <a href="{% url 'core:home' %}"      class="nav-link-item {% if request.resolver_match.url_name == 'home' %}active-link{% endif %}">Home</a>
+    <a href="{% url 'core:about' %}"     class="nav-link-item {% if request.resolver_match.url_name == 'about' %}active-link{% endif %}">About</a>
+    <a href="{% url 'core:services' %}"  class="nav-link-item {% if request.resolver_match.url_name == 'services' %}active-link{% endif %}">Services</a>
+    <a href="{% url 'training:course_list' %}" class="nav-link-item {% if 'training' in request.path %}active-link{% endif %}">Training</a>
+    <a href="{% url 'shop:shop_home' %}" class="nav-link-item {% if 'shop' in request.path %}active-link{% endif %}">Shop</a>
+    <a href="{% url 'blog:post_list' %}" class="nav-link-item {% if 'blog' in request.path %}active-link{% endif %}">Blog</a>
+    {% comment %} <a href="{% url 'certificates:verify' %}" class="nav-link-item">Verify Cert</a>
+    <a href="{% url 'shop:track_order' %}" class="nav-link-item">Track Order</a> {% endcomment %}
+    {% if user.is_authenticated %}
+      {% if user.is_admin_user %}
+        <a href="{% url 'accounts:admin_dashboard' %}" class="nav-link-item"><i class="fas fa-cog"></i> Admin</a>
+      {% endif %}
+      <a href="{% url 'accounts:dashboard' %}" class="nav-link-item nav-cta-btn">
+        <i class="fas fa-user"></i> {{ user.first_name }}
+      </a>
+    {% else %}
+      <a href="{% url 'accounts:login' %}"    class="nav-link-item">Login</a>
+      <a href="{% url 'accounts:register' %}" class="nav-link-item nav-cta-btn">Register</a>
+    {% endif %}
+  </div>
+</nav>
+
+<!-- MESSAGES -->
+{% if messages %}
+<div class="messages-wrap">
+  {% for msg in messages %}
+  <div class="alert alert-{% if msg.tags == 'error' %}danger{% else %}{{ msg.tags }}{% endif %} alert-dismissible fade show" role="alert">
+    {{ msg }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- CONTENT -->
+{% block content %}{% endblock %}
+
+<!-- NEWSLETTER BAR -->
+<div style="background:var(--primary);padding:36px 2rem;text-align:center;">
+  <h3 style="font-family:var(--font-display);color:#fff;font-size:1.2rem;margin-bottom:6px;">Stay Ahead with SIBRAH</h3>
+  <p style="color:rgba(255,255,255,0.6);font-size:0.86rem;margin-bottom:16px;">Subscribe for tech tips, course updates and exclusive offers.</p>
+  <form method="post" action="{% url 'core:contact' %}" style="display:flex;gap:9px;max-width:400px;margin:0 auto;">
+    {% csrf_token %}
+    <input type="email" name="newsletter_email" placeholder="Enter your email" required
+           style="flex:1;padding:10px 16px;border:1.5px solid rgba(255,255,255,0.15);border-radius:8px;background:rgba(255,255,255,0.08);color:#fff;font-family:var(--font-body);font-size:0.88rem;outline:none;">
+    <button type="submit" style="background:var(--accent);color:var(--primary);border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:0.86rem;cursor:pointer;">Subscribe</button>
+  </form>
+</div>
+
+<!-- FOOTER -->
+<footer class="sibrah-footer">
+  <div class="container-fluid">
+    <div class="row g-4 mb-4">
+      <div class="col-md-4">
+        <h4><span style="color:var(--accent)">SIBRAH</span> Computers &amp; Technology Hub</h4>
+        <p style="font-size:0.84rem;line-height:1.7;">Empowering businesses and individuals through technology, innovation, and digital solutions. Your trusted ICT partner in Abuja, Nigeria.</p>
+      </div>
+      <div class="col-md-2 col-6">
+        <h4>Quick Links</h4>
+        <a href="{% url 'core:home' %}">Home</a>
+        <a href="{% url 'core:about' %}">About Us</a>
+        <a href="{% url 'core:services' %}">Services</a>
+        <a href="{% url 'training:course_list' %}">Training</a>
+        <a href="{% url 'core:portfolio' %}">Portfolio</a>
+        <a href="{% url 'shop:track_order' %}">Track Order</a>
+      </div>
+      <div class="col-md-2 col-6">
+        <h4>Services</h4>
+        <a href="{% url 'core:services' %}">Computer Sales</a>
+        <a href="{% url 'core:services' %}">Repairs</a>
+        <a href="{% url 'core:services' %}">Software Dev</a>
+        <a href="{% url 'training:course_list' %}">ICT Training</a>
+        <a href="{% url 'certificates:verify' %}">🏆 Verify Certificate</a>
+      </div>
+      <div class="col-md-3">
+        <h4>Contact</h4>
+        <a href="#"><i class="fas fa-map-marker-alt me-2"></i>Abuja, Nigeria</a>
+        <a href="tel:+2348081101992"><i class="fas fa-phone me-2"></i>+234 808 110 1992</a>
+        <a href="mailto:info@sibrahtech.com.ng"><i class="fas fa-envelope me-2"></i>info@sibrahtech.com.ng</a>
+        <a href="https://wa.me/2348081101992" target="_blank"><i class="fab fa-whatsapp me-2"></i>WhatsApp Us</a>
+        {% comment %} <a href="#">🕒 Mon–Sat: 8AM–6PM</a>
+        <a href="{% url 'certificates:verify' %}">🏆 Verify Certificate</a> {% endcomment %}
+        <div style="margin-top:16px;">
+          <p style="color:rgba(255,255,255,0.4);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Follow Us</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <a href="#" target="_blank" title="Facebook"
+               style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;transition:all 0.2s;"
+               onmouseover="this.style.background='#1877f2';this.style.color='#fff'"
+               onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.7)'">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" target="_blank" title="Instagram"
+               style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;transition:all 0.2s;"
+               onmouseover="this.style.background='#e1306c';this.style.color='#fff'"
+               onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.7)'">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" target="_blank" title="Twitter / X"
+               style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;transition:all 0.2s;"
+               onmouseover="this.style.background='#000';this.style.color='#fff'"
+               onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.7)'">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" target="_blank" title="TikTok"
+               style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;transition:all 0.2s;"
+               onmouseover="this.style.background='#010101';this.style.color='#69c9d0'"
+               onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.7)'">
+              <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="#" target="_blank" title="LinkedIn"
+               style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;transition:all 0.2s;"
+               onmouseover="this.style.background='#0a66c2';this.style.color='#fff'"
+               onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.7)'">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom d-flex justify-content-between flex-wrap gap-2">
+      <p>&copy; 2025 <span style="color:var(--accent)">SIBRAH Computers &amp; Technology Hub</span>. All rights reserved.</p>
+      <p>Built with Django &amp; Python &mdash; Abuja, Nigeria</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/2348081101992" class="wa-float" target="_blank" title="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Mobile nav toggle
+document.getElementById('navToggler').addEventListener('click', function(){
+  var m = document.getElementById('navMenu');
+  m.classList.toggle('d-none');
+  m.classList.toggle('d-flex');
+  m.style.flexDirection = 'column';
+  m.style.position = 'absolute';
+  m.style.top = '65px';
+  m.style.left = '0';
+  m.style.right = '0';
+  m.style.background = '#0a2540';
+  m.style.padding = '16px 20px';
+  m.style.zIndex = '999';
+});
+// Auto-dismiss messages after 5s
+setTimeout(function(){
+  document.querySelectorAll('.alert').forEach(function(a){
+    var bsAlert = bootstrap.Alert.getOrCreateInstance(a);
+    bsAlert.close();
+  });
+}, 5000);
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

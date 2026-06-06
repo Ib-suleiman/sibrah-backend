@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Order Placed — SIBRAH{% endblock %}
+
+{% block content %}
+<section style="background:var(--light);padding:100px 2rem;text-align:center;">
+  <div style="max-width:560px;margin:0 auto;" class="sibrah-card">
+
+    <div style="font-size:4rem;margin-bottom:16px;">🎉</div>
+    <h1 style="font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--primary);margin-bottom:10px;">
+      Payment Proof Received!
+    </h1>
+    <p style="color:var(--muted);line-height:1.7;margin-bottom:8px;">
+      Thank you <strong>{{ order.customer_name }}</strong>! We have received your payment proof for:
+    </p>
+
+    <!-- ORDER SUMMARY BOX -->
+    <div style="background:var(--light);border:1.5px solid var(--mid);border-radius:14px;padding:20px;margin:20px 0;text-align:left;">
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--mid);font-size:0.88rem;">
+        <span style="color:var(--muted);">Order Number</span>
+        <strong style="color:var(--accent);font-family:var(--font-display);">#{{ order.order_number }}</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--mid);font-size:0.88rem;">
+        <span style="color:var(--muted);">Amount</span>
+        <strong style="color:var(--primary);">&#8358;{{ order.total_amount|floatformat:0 }}</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:0.88rem;">
+        <span style="color:var(--muted);">Status</span>
+        <span class="badge-pending">Awaiting Confirmation</span>
+      </div>
+    </div>
+
+    <!-- CONFIRMATION EMAIL NOTE -->
+    <div style="background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:10px;padding:14px;margin-bottom:20px;font-size:0.84rem;color:var(--muted);text-align:left;">
+      <strong style="color:var(--primary);">📧 Check your email!</strong><br>
+      A confirmation email with your order details and payment instructions has been sent to
+      <strong>{{ order.customer_email }}</strong>.
+    </div>
+
+    <p style="color:var(--muted);font-size:0.86rem;margin-bottom:24px;">
+      We will verify your payment and confirm your order within <strong>2 hours</strong>.
+      You will receive another email once confirmed.
+    </p>
+
+    <!-- ACTION BUTTONS -->
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="{% url 'shop:track_order' %}" class="btn-sibrah">
+        <i class="fas fa-map-marker-alt"></i> Track My Order
+      </a>
+      <a href="https://wa.me/2348081101992?text=Hello+SIBRAH,+I+have+submitted+payment+proof+for+Order+%23{{ order.order_number }}"
+         target="_blank"
+         style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:11px 22px;border-radius:8px;font-weight:600;font-size:0.88rem;text-decoration:none;">
+        <i class="fab fa-whatsapp"></i> WhatsApp Us
+      </a>
+    </div>
+
+    <p style="margin-top:20px;font-size:0.8rem;color:var(--muted);">
+      Save your order number: <strong style="color:var(--accent);">#{{ order.order_number }}</strong>
+      — you'll need it to track your order.
+    </p>
+
+  </div>
+</section>
+{% endblock %}

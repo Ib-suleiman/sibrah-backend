@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — SIBRAH{% endblock %}
+{% block content %}
+<div style="background:var(--primary);padding:80px 2rem 30px;">
+  <h2 style="font-family:var(--font-display);color:#fff;font-size:1.6rem;font-weight:800;">SIBRAH Admin Dashboard</h2>
+  <p style="color:rgba(255,255,255,0.6);font-size:0.88rem;">Welcome, {{ request.user.full_name }}</p>
+</div>
+<div class="container-fluid px-4 py-4">
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3"><div class="sibrah-card text-center"><div style="font-size:2rem;margin-bottom:8px;">👥</div><h3 style="font-family:var(--font-display);font-size:1.6rem;color:var(--primary);">{{ total_students }}</h3><p style="color:var(--muted);font-size:0.8rem;">Students</p></div></div>
+    <div class="col-6 col-md-3"><div class="sibrah-card text-center"><div style="font-size:2rem;margin-bottom:8px;">🛒</div><h3 style="font-family:var(--font-display);font-size:1.6rem;color:var(--primary);">{{ total_orders }}</h3><p style="color:var(--muted);font-size:0.8rem;">Orders</p></div></div>
+    <div class="col-6 col-md-3"><div class="sibrah-card text-center"><div style="font-size:2rem;margin-bottom:8px;">📚</div><h3 style="font-family:var(--font-display);font-size:1.6rem;color:var(--primary);">{{ total_enrollments }}</h3><p style="color:var(--muted);font-size:0.8rem;">Enrollments</p></div></div>
+    <div class="col-6 col-md-3"><div class="sibrah-card text-center"><div style="font-size:2rem;margin-bottom:8px;">🏆</div><h3 style="font-family:var(--font-display);font-size:1.6rem;color:var(--primary);">{{ total_certs }}</h3><p style="color:var(--muted);font-size:0.8rem;">Certificates</p></div></div>
+  </div>
+  <div class="row g-3 mb-4">
+    <div class="col-md-3"><a href="/admin/" class="sibrah-card d-block text-center" style="text-decoration:none;"><div style="font-size:2rem;margin-bottom:8px;">⚙️</div><h4 style="font-family:var(--font-display);font-size:0.95rem;color:var(--primary);margin:0;">Full Django Admin</h4><p style="color:var(--muted);font-size:0.78rem;margin-top:4px;">Manage everything</p></a></div>
+    <div class="col-md-3"><a href="{% url 'accounts:admin_students' %}" class="sibrah-card d-block text-center" style="text-decoration:none;"><div style="font-size:2rem;margin-bottom:8px;">🎓</div><h4 style="font-family:var(--font-display);font-size:0.95rem;color:var(--primary);margin:0;">Students</h4><p style="color:var(--muted);font-size:0.78rem;margin-top:4px;">View all students</p></a></div>
+    <div class="col-md-3"><a href="{% url 'accounts:admin_orders' %}" class="sibrah-card d-block text-center" style="text-decoration:none;"><div style="font-size:2rem;margin-bottom:8px;">📦</div><h4 style="font-family:var(--font-display);font-size:0.95rem;color:var(--primary);margin:0;">Orders</h4><p style="color:var(--muted);font-size:0.78rem;margin-top:4px;">View all orders</p></a></div>
+    <div class="col-md-3"><a href="{% url 'certificates:verify' %}" class="sibrah-card d-block text-center" style="text-decoration:none;"><div style="font-size:2rem;margin-bottom:8px;">📜</div><h4 style="font-family:var(--font-display);font-size:0.95rem;color:var(--primary);margin:0;">Verify Cert</h4><p style="color:var(--muted);font-size:0.78rem;margin-top:4px;">Check certificate</p></a></div>
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <div class="sibrah-card">
+        <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:800;color:var(--primary);margin-bottom:16px;">Recent Students</h3>
+        {% for s in recent_students %}
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--mid);font-size:0.86rem;">
+          <div><strong style="color:var(--primary);">{{ s.full_name }}</strong><br><span style="color:var(--muted);font-size:0.76rem;">{{ s.student_id }} &bull; {{ s.email }}</span></div>
+          <span style="color:var(--muted);font-size:0.76rem;">{{ s.created_at|date:"M j" }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="sibrah-card">
+        <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:800;color:var(--primary);margin-bottom:16px;">Recent Orders</h3>
+        {% for o in recent_orders %}
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--mid);font-size:0.86rem;">
+          <div><strong style="color:var(--primary);">{{ o.customer_name }}</strong><br><span style="color:var(--muted);font-size:0.76rem;">#{{ o.order_number }}</span></div>
+          <div style="text-align:right;"><strong style="color:var(--accent);">&#8358;{{ o.total_amount|floatformat:0 }}</strong><br><span class="badge-{{ o.status }}">{{ o.get_status_display }}</span></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

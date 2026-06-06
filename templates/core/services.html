@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Our Services — SIBRAH{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">What We Do</div>
+  <h1>Our Services</h1>
+  <p>Comprehensive ICT solutions for individuals, businesses, and institutions across Nigeria.</p>
+</div>
+<section style="background:#fff;padding:70px 2rem;">
+  <div class="container-fluid">
+    {% for svc in services_full %}
+    <div class="sibrah-card mb-4">
+      <h2 style="font-family:var(--font-display);font-size:1.35rem;font-weight:800;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:12px;">{{ svc.icon }} {{ svc.title }}</h2>
+      <p style="color:var(--muted);line-height:1.7;margin-bottom:14px;">{{ svc.desc }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        {% for tag in svc.tags %}<span style="background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);color:var(--primary);padding:6px 16px;border-radius:100px;font-size:0.8rem;font-weight:500;">{{ tag }}</span>{% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+<section style="background:var(--gradient);text-align:center;padding:70px 2rem;">
+  <h2 style="font-family:var(--font-display);color:#fff;font-size:2rem;font-weight:800;margin-bottom:14px;">Need a Custom Solution?</h2>
+  <p style="color:rgba(255,255,255,0.65);margin-bottom:28px;">Let's discuss your requirements and build exactly what you need.</p>
+  <a href="{% url 'core:contact' %}" class="btn-sibrah"><i class="fas fa-paper-plane"></i> Request a Quotation</a>
+</section>
+{% endblock %}

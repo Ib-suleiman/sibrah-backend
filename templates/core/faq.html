@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}FAQ — SIBRAH{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">FAQ</div>
+  <h1>Frequently Asked Questions</h1>
+  <p>Quick answers to the most common questions about our services.</p>
+</div>
+<section style="background:#fff;padding:70px 2rem;">
+  <div style="max-width:780px;margin:0 auto;">
+    <div class="accordion" id="faqAccordion">
+      {% for faq in faqs %}
+      <div class="accordion-item" style="border:1.5px solid var(--mid);border-radius:14px!important;margin-bottom:12px;overflow:hidden;">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq{{ forloop.counter }}" style="font-weight:600;font-size:0.92rem;color:var(--primary);background:#fff;border-radius:14px!important;">
+            {{ faq.q }}
+          </button>
+        </h2>
+        <div id="faq{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body" style="color:var(--muted);font-size:0.88rem;line-height:1.7;">{{ faq.a }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<section style="background:var(--gradient);text-align:center;padding:70px 2rem;">
+  <h2 style="font-family:var(--font-display);color:#fff;font-size:2rem;font-weight:800;margin-bottom:14px;">Still Have Questions?</h2>
+  <p style="color:rgba(255,255,255,0.65);margin-bottom:28px;">Call or WhatsApp us: +234 808 110 1992</p>
+  <a href="{% url 'core:contact' %}" class="btn-sibrah"><i class="fas fa-headset"></i> Contact Support</a>
+</section>
+{% endblock %}

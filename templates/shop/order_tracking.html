@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block title %}Track Your Order — SIBRAH{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">Order Tracking</div>
+  <h1>Track Your Order</h1>
+  <p>Enter your order number and email address to see your order status.</p>
+</div>
+
+<section style="background:var(--light);padding:60px 2rem;">
+  <div style="max-width:580px;margin:0 auto;">
+
+    <!-- SEARCH FORM -->
+    <div class="sibrah-card mb-4">
+      <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:6px;">
+        🔍 Find Your Order
+      </h3>
+      <p style="color:var(--muted);font-size:0.86rem;margin-bottom:22px;">
+        Your order number was shown on the payment page and sent to your email (e.g. <strong>ORD-2025-1234</strong>).
+      </p>
+      <form method="post">
+        {% csrf_token %}
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.84rem;font-weight:600;display:block;margin-bottom:6px;">Order Number *</label>
+          <input type="text" name="order_number" class="form-control"
+                 placeholder="e.g. ORD-2025-1234"
+                 value="{{ searched_order_number|default:'' }}"
+                 style="text-transform:uppercase;" required>
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="font-size:0.84rem;font-weight:600;display:block;margin-bottom:6px;">Email Address or Phone *</label>
+          <input type="text" name="identifier" class="form-control"
+                 placeholder="Email or phone number used when ordering"
+                 value="{{ searched_identifier|default:'' }}" required>
+        </div>
+        <button type="submit" class="btn-sibrah w-100" style="justify-content:center;">
+          <i class="fas fa-search"></i> Track My Order
+        </button>
+      </form>
+    </div>
+
+    <!-- RESULT -->
+    {% if searched %}
+      {% if order %}
+      <!-- ORDER FOUND -->
+      <div class="sibrah-card">
+        <!-- Header -->
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:24px;padding-bottom:18px;border-bottom:1.5px solid var(--mid);">
+          <div>
+            <div style="font-size:0.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Order Number</div>
+            <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--primary);">#{{ order.order_number }}</div>
+            <div style="font-size:0.8rem;color:var(--muted);margin-top:3px;">Placed on {{ order.created_at|date:"F j, Y" }}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">Total Amount</div>
+            <div style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--accent);">&#8358;{{ order.total_amount|floatformat:0 }}</div>
+          </div>
+        </div>
+
+        <!-- STATUS TRACKER -->
+        <h4 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:var(--primary);margin-bottom:20px;">Order Status</h4>
+
+        {% with status=order.status %}
+        <div style="position:relative;padding-left:30px;">
+
+          <!-- Step 1: Order Placed -->
+          <div style="position:relative;margin-bottom:24px;">
+            <div style="position:absolute;left:-30px;top:0;width:20px;height:20px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:var(--primary);font-weight:800;">✓</div>
+            <div style="position:absolute;left:-21px;top:20px;width:2px;height:calc(100% + 4px);background:{% if status == 'pending' %}var(--mid){% else %}var(--accent){% endif %};"></div>
+            <div style="font-weight:700;color:var(--primary);font-size:0.9rem;">Order Placed</div>
+            <div style="font-size:0.8rem;color:var(--muted);">{{ order.created_at|date:"M j, Y — g:i A" }}</div>
+          </div>
+
+          <!-- Step 2: Payment -->
+          <div style="position:relative;margin-bottom:24px;">
+            <div style="position:absolute;left:-30px;top:0;width:20px;height:20px;border-radius:50%;background:{% if status == 'pending' %}var(--mid){% else %}var(--accent){% endif %};display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:{% if status == 'pending' %}var(--muted){% else %}var(--primary){% endif %};font-weight:800;">{% if status == 'pending' %}2{% else %}✓{% endif %}</div>
+            <div style="position:absolute;left:-21px;top:20px;width:2px;height:calc(100% + 4px);background:{% if status == 'confirmed' or status == 'processing' or status == 'delivered' %}var(--accent){% else %}var(--mid){% endif %};"></div>
+            <div style="font-weight:700;color:{% if status == 'pending' %}var(--muted){% else %}var(--primary){% endif %};font-size:0.9rem;">Payment Confirmed</div>
+            <div style="font-size:0.8rem;color:var(--muted);">{% if status == 'pending' %}Awaiting payment verification{% else %}Payment verified by SIBRAH{% endif %}</div>
+          </div>
+
+          <!-- Step 3: Processing -->
+          <div style="position:relative;margin-bottom:24px;">
+            <div style="position:absolute;left:-30px;top:0;width:20px;height:20px;border-radius:50%;background:{% if status == 'processing' or status == 'delivered' %}var(--accent){% else %}var(--mid){% endif %};display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:{% if status == 'processing' or status == 'delivered' %}var(--primary){% else %}var(--muted){% endif %};font-weight:800;">{% if status == 'delivered' %}✓{% else %}3{% endif %}</div>
+            <div style="position:absolute;left:-21px;top:20px;width:2px;height:calc(100% + 4px);background:{% if status == 'delivered' %}var(--accent){% else %}var(--mid){% endif %};"></div>
+            <div style="font-weight:700;color:{% if status == 'processing' or status == 'delivered' %}var(--primary){% else %}var(--muted){% endif %};font-size:0.9rem;">Processing / Preparing</div>
+            <div style="font-size:0.8rem;color:var(--muted);">{% if status == 'processing' %}Your order is being prepared{% elif status == 'delivered' %}Order was prepared and dispatched{% else %}Not started yet{% endif %}</div>
+          </div>
+
+          <!-- Step 4: Delivered -->
+          <div style="position:relative;">
+            <div style="position:absolute;left:-30px;top:0;width:20px;height:20px;border-radius:50%;background:{% if status == 'delivered' %}var(--accent){% else %}var(--mid){% endif %};display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:{% if status == 'delivered' %}var(--primary){% else %}var(--muted){% endif %};font-weight:800;">{% if status == 'delivered' %}✓{% else %}4{% endif %}</div>
+            <div style="font-weight:700;color:{% if status == 'delivered' %}var(--primary){% else %}var(--muted){% endif %};font-size:0.9rem;">Delivered</div>
+            <div style="font-size:0.8rem;color:var(--muted);">{% if status == 'delivered' %}Order delivered successfully!{% else %}Pending delivery{% endif %}</div>
+          </div>
+
+        </div>
+        {% endwith %}
+
+        <!-- CURRENT STATUS BADGE -->
+        <div style="margin-top:24px;padding:16px;background:var(--light);border-radius:12px;border:1.5px solid var(--mid);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <div>
+            <div style="font-size:0.76rem;color:var(--muted);margin-bottom:4px;">Current Status</div>
+            <span class="badge-{{ order.status }}" style="font-size:0.85rem;padding:5px 14px;">{{ order.get_status_display }}</span>
+          </div>
+          {% if order.status == 'pending' %}
+          <a href="https://wa.me/2348081101992?text=Hello+SIBRAH,+I+have+paid+for+Order+%23{{ order.order_number }}+and+want+to+confirm+my+payment."
+             target="_blank"
+             style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.84rem;text-decoration:none;">
+            <i class="fab fa-whatsapp"></i> Send Payment Proof
+          </a>
+          {% endif %}
+        </div>
+
+        <!-- ORDER ITEMS -->
+        {% if order.items.all %}
+        <div style="margin-top:20px;">
+          <h4 style="font-family:var(--font-display);font-size:0.9rem;font-weight:700;color:var(--primary);margin-bottom:12px;">Items Ordered</h4>
+          {% for item in order.items.all %}
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--mid);font-size:0.86rem;">
+            <span style="color:var(--primary);font-weight:500;">{{ item.quantity }}x {{ item.name }}</span>
+            <span style="font-weight:700;color:var(--primary);">&#8358;{{ item.subtotal|floatformat:0 }}</span>
+          </div>
+          {% endfor %}
+          <div style="display:flex;justify-content:space-between;padding:12px 0;font-weight:800;font-size:0.95rem;">
+            <span style="color:var(--primary);">Total</span>
+            <span style="color:var(--accent);font-family:var(--font-display);">&#8358;{{ order.total_amount|floatformat:0 }}</span>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- CONTACT -->
+        <div style="margin-top:16px;padding:14px;background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.2);border-radius:10px;font-size:0.82rem;color:var(--muted);text-align:center;">
+          Questions about your order? Call or WhatsApp <strong style="color:var(--primary);">+234 808 110 1992</strong>
+          or email <strong style="color:var(--primary);">info@sibrahtech.com.ng</strong>
+        </div>
+      </div>
+
+      {% elif cancelled %}
+      <!-- CANCELLED -->
+      <div style="background:#fff5f5;border:1.5px solid #fca5a5;border-radius:16px;padding:24px;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">❌</div>
+        <h4 style="color:#dc2626;font-family:var(--font-display);font-weight:700;margin-bottom:8px;">Order Cancelled</h4>
+        <p style="color:#7f1d1d;font-size:0.86rem;">This order has been cancelled. Contact us at +234 808 110 1992 if you have questions.</p>
+      </div>
+
+      {% else %}
+      <!-- NOT FOUND -->
+      <div style="background:#fff5f5;border:1.5px solid #fca5a5;border-radius:16px;padding:24px;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">🔍</div>
+        <h4 style="color:#dc2626;font-family:var(--font-display);font-weight:700;margin-bottom:8px;">Order Not Found</h4>
+        <p style="color:#7f1d1d;font-size:0.86rem;margin-bottom:16px;">
+          We couldn't find an order matching <strong>{{ searched_order_number }}</strong> with that email/phone.
+          Please check the details and try again.
+        </p>
+        <p style="color:#7f1d1d;font-size:0.82rem;">
+          Need help? WhatsApp us: <strong>+234 808 110 1992</strong>
+        </p>
+      </div>
+      {% endif %}
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Payment Successful — SIBRAH{% endblock %}
+
+{% block content %}
+<section style="background:var(--light);padding:100px 2rem;text-align:center;">
+  <div style="max-width:560px;margin:0 auto;">
+
+    <!-- SUCCESS ANIMATION -->
+    <div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#00a884);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:2.5rem;box-shadow:0 12px 40px rgba(0,212,170,0.3);">
+      ✓
+    </div>
+
+    <h1 style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--primary);margin-bottom:10px;">
+      Payment Successful! 🎉
+    </h1>
+
+    {% if transaction %}
+    <div style="background:#fff;border-radius:16px;padding:24px;border:1.5px solid var(--mid);margin:24px 0;text-align:left;">
+      <h4 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:var(--primary);margin-bottom:14px;">Transaction Summary</h4>
+      <div style="font-size:0.86rem;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--mid);">
+          <span style="color:var(--muted);">Reference</span>
+          <strong style="color:var(--primary);">{{ transaction.reference }}</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--mid);">
+          <span style="color:var(--muted);">Amount Paid</span>
+          <strong style="color:var(--accent);">&#8358;{{ transaction.amount|floatformat:0 }}</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--mid);">
+          <span style="color:var(--muted);">Payment Method</span>
+          <strong style="color:var(--primary);">{{ transaction.channel|capfirst|default:"Online" }}</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;">
+          <span style="color:var(--muted);">Status</span>
+          <span class="badge-active">Confirmed</span>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if purpose == 'course' and enrollment %}
+    <p style="color:var(--muted);line-height:1.7;margin-bottom:28px;">
+      Your enrollment for <strong>{{ enrollment.course.title }}</strong> is now
+      <strong style="color:var(--accent);">ACTIVE</strong>.
+      Log into your student portal to track your progress and access upcoming sessions.
+    </p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="{% url 'accounts:dashboard' %}" class="btn-sibrah">
+        <i class="fas fa-graduation-cap"></i> Go to Dashboard
+      </a>
+      <a href="{% url 'training:course_list' %}" class="btn-sibrah-outline">
+        <i class="fas fa-book"></i> Browse More Courses
+      </a>
+    </div>
+
+    {% elif purpose == 'order' and order %}
+    <p style="color:var(--muted);line-height:1.7;margin-bottom:28px;">
+      Your order <strong>#{{ order.order_number }}</strong> has been
+      <strong style="color:var(--accent);">CONFIRMED</strong>.
+      We will process and deliver your item(s) shortly.
+      We'll contact you on <strong>{{ order.customer_phone }}</strong>.
+    </p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="{% url 'shop:shop_home' %}" class="btn-sibrah">
+        <i class="fas fa-shopping-cart"></i> Continue Shopping
+      </a>
+      <a href="https://wa.me/2348081101992" target="_blank"
+         style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:11px 22px;border-radius:8px;font-weight:600;font-size:0.9rem;text-decoration:none;">
+        <i class="fab fa-whatsapp"></i> Track via WhatsApp
+      </a>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}

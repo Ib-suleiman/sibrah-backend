@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard — SIBRAH{% endblock %}
+
+{% block content %}
+<div style="background:var(--gradient);padding:80px 2rem 30px;">
+  <div class="container-fluid">
+    <div class="section-tag">Student Portal</div>
+    <h1 style="font-family:var(--font-display);color:#fff;font-size:1.8rem;font-weight:800;margin-top:8px;">
+      Welcome back, <span style="color:var(--accent)">{{ user.first_name }}</span> 👋
+    </h1>
+    <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;">
+      Student ID: <strong style="color:var(--accent)">{{ user.student_id }}</strong>
+      &nbsp;|&nbsp; {{ user.email }}
+    </p>
+  </div>
+</div>
+
+<div class="container-fluid py-4 px-4">
+  <!-- STAT CARDS -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="sibrah-card text-center">
+        <div style="font-size:2rem;margin-bottom:8px;">📚</div>
+        <h3 style="font-family:var(--font-display);font-size:1.8rem;color:var(--primary);">{{ total_courses }}</h3>
+        <p style="color:var(--muted);font-size:0.8rem;">Courses Enrolled</p>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="sibrah-card text-center">
+        <div style="font-size:2rem;margin-bottom:8px;">✅</div>
+        <h3 style="font-family:var(--font-display);font-size:1.8rem;color:var(--primary);">{{ completed_courses }}</h3>
+        <p style="color:var(--muted);font-size:0.8rem;">Completed</p>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="sibrah-card text-center">
+        <div style="font-size:2rem;margin-bottom:8px;">🏆</div>
+        <h3 style="font-family:var(--font-display);font-size:1.8rem;color:var(--primary);">{{ total_certificates }}</h3>
+        <p style="color:var(--muted);font-size:0.8rem;">Certificates</p>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="sibrah-card text-center">
+        <div style="font-size:2rem;margin-bottom:8px;">👤</div>
+        <h3 style="font-family:var(--font-display);font-size:1rem;color:var(--primary);">{{ user.student_id }}</h3>
+        <p style="color:var(--muted);font-size:0.8rem;">Student ID</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- MY COURSES -->
+    <div class="col-lg-7">
+      <div class="sibrah-card">
+        <h3 style="font-family:var(--font-display);font-size:1.05rem;font-weight:800;color:var(--primary);margin-bottom:18px;">
+          My Courses
+        </h3>
+        {% for enr in enrollments %}
+        <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--mid);">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <strong style="font-size:0.9rem;color:var(--primary);">{{ enr.course.icon }} {{ enr.course.title }}</strong>
+            <span class="badge-{% if enr.status == 'active' %}active{% elif enr.status == 'completed' %}completed{% elif enr.status == 'cancelled' %}cancelled{% else %}pending{% endif %}">
+              {{ enr.get_status_display }}
+            </span>
+          </div>
+          <div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px;">
+            {% if enr.status == 'completed' %}100{% else %}{{ enr.progress }}{% endif %}% complete
+          </div>
+          <div class="progress-sibrah">
+            <div class="fill" style="width:{% if enr.status == 'completed' %}100{% else %}{{ enr.progress }}{% endif %}%;
+              {% if enr.status == 'completed' %}background:#16a34a;{% endif %}">
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p style="color:var(--muted);font-size:0.9rem;text-align:center;padding:20px 0;">
+          You haven't enrolled in any courses yet.
+          <a href="{% url 'training:course_list' %}" style="color:var(--accent);">Browse Courses</a>
+        </p>
+        {% endfor %}
+        <a href="{% url 'training:course_list' %}" class="btn-sibrah-outline mt-2" style="font-size:0.85rem;">
+          <i class="fas fa-plus"></i> Enroll in a New Course
+        </a>
+      </div>
+    </div>
+
+    <!-- CERTIFICATES -->
+    <div class="col-lg-5">
+      <div class="sibrah-card">
+        <h3 style="font-family:var(--font-display);font-size:1.05rem;font-weight:800;color:var(--primary);margin-bottom:18px;">
+          My Certificates
+        </h3>
+        {% for cert in certificates %}
+        <div style="background:var(--light);border-radius:12px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;border:1px solid var(--mid);">
+          <div style="width:44px;height:44px;border-radius:10px;background:rgba(0,212,170,0.1);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">🏆</div>
+          <div style="flex:1;">
+            <strong style="font-size:0.88rem;color:var(--primary);">{{ cert.course.title }}</strong>
+            <div style="font-size:0.74rem;color:var(--muted);">{{ cert.code }} &bull; {{ cert.issued_at|date:"M Y" }}</div>
+          </div>
+          <a href="{% url 'certificates:detail' cert.code %}" class="btn-sibrah" style="padding:6px 12px;font-size:0.76rem;">
+            <i class="fas fa-eye"></i> View
+          </a>
+        </div>
+        {% empty %}
+        <p style="color:var(--muted);font-size:0.88rem;text-align:center;padding:20px 0;">
+          Certificates will appear here once you complete a course.
+        </p>
+        {% endfor %}
+      </div>
+
+      <!-- PROFILE CARD -->
+      <div class="sibrah-card mt-3">
+        <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:800;color:var(--primary);margin-bottom:14px;">My Profile</h3>
+        <div style="font-size:0.86rem;color:var(--muted);">
+          <div class="d-flex justify-content-between py-2" style="border-bottom:1px solid var(--mid);">
+            <span>Full Name</span><strong style="color:var(--primary);">{{ user.full_name }}</strong>
+          </div>
+          <div class="d-flex justify-content-between py-2" style="border-bottom:1px solid var(--mid);">
+            <span>Email</span><strong style="color:var(--primary);">{{ user.email }}</strong>
+          </div>
+          <div class="d-flex justify-content-between py-2" style="border-bottom:1px solid var(--mid);">
+            <span>Phone</span><strong style="color:var(--primary);">{{ user.phone|default:"Not set" }}</strong>
+          </div>
+          <div class="d-flex justify-content-between py-2">
+            <span>Member Since</span><strong style="color:var(--primary);">{{ user.created_at|date:"M Y" }}</strong>
+          </div>
+        </div>
+        <div class="d-flex gap-2 mt-3 flex-wrap">
+          <a href="{% url 'accounts:edit_profile' %}" class="btn-sibrah-outline" style="font-size:0.82rem;flex:1;justify-content:center;min-width:120px;">
+            <i class="fas fa-edit"></i> Edit Profile
+          </a>
+          <a href="{% url 'accounts:change_password' %}" class="btn-sibrah-outline" style="font-size:0.82rem;flex:1;justify-content:center;min-width:120px;color:var(--accent);border-color:var(--accent);">
+            <i class="fas fa-lock"></i> Change Password
+          </a>
+          <a href="{% url 'accounts:logout' %}" class="btn-sibrah-outline" style="font-size:0.82rem;flex:1;justify-content:center;min-width:120px;color:#dc2626;border-color:#dc2626;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

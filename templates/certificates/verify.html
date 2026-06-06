@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Verify Certificate — SIBRAH{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">Authenticity Check</div>
+  <h1>Certificate Verification</h1>
+  <p>Enter a certificate code to instantly verify its authenticity.</p>
+</div>
+
+<div style="background:var(--light);padding:60px 2rem;">
+  <div style="max-width:620px;margin:0 auto;">
+    <div class="sibrah-card">
+      <h3 style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--primary);margin-bottom:8px;">
+        🔍 Certificate Verification System
+      </h3>
+      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:22px;">
+        Enter the unique code printed on the certificate card (e.g. SIBRAH-2025-PY-001).
+      </p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div style="display:flex;gap:10px;">
+          <input type="text" name="code" value="{{ code }}" placeholder="e.g. SIBRAH-2025-PY-001"
+                 class="form-control" style="text-transform:uppercase;font-weight:600;"
+                 required>
+          <button type="submit" class="btn-sibrah" style="white-space:nowrap;">
+            <i class="fas fa-search"></i> Verify
+          </button>
+        </div>
+      </form>
+
+      <!-- RESULT -->
+      {% if result %}
+        {% if result.found %}
+        <div style="margin-top:24px;background:linear-gradient(135deg,#0a2540,#1a4a6e);border-radius:16px;padding:26px;position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 80% 20%,rgba(0,212,170,0.15) 0%,transparent 70%);"></div>
+          <div style="display:flex;align-items:center;gap:13px;margin-bottom:18px;position:relative;">
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.3rem;flex-shrink:0;">✓</div>
+            <div>
+              <h4 style="font-family:var(--font-display);color:#fff;font-size:1.05rem;font-weight:800;margin:0;">Certificate Verified</h4>
+              <span style="color:var(--accent);font-size:0.8rem;font-weight:600;">This is an authentic SIBRAH certificate</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative;">
+            {% with c=result.cert %}
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:13px;">
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Student Name</div>
+              <div style="font-family:var(--font-display);color:#fff;font-size:0.92rem;font-weight:700;">{{ c.student.full_name }}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:13px;">
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Certificate Code</div>
+              <div style="font-family:var(--font-display);color:#fff;font-size:0.92rem;font-weight:700;">{{ c.code }}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:13px;">
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Course Completed</div>
+              <div style="font-family:var(--font-display);color:#fff;font-size:0.92rem;font-weight:700;">{{ c.course.title }}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:13px;">
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Grade Awarded</div>
+              <div style="font-family:var(--font-display);color:#fff;font-size:0.92rem;font-weight:700;">{{ c.get_grade_display }}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:13px;">
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Date Issued</div>
+              <div style="font-family:var(--font-display);color:#fff;font-size:0.92rem;font-weight:700;">{{ c.issued_at|date:"F j, Y" }}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:13px;">
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Issued By</div>
+              <div style="font-family:var(--font-display);color:#fff;font-size:0.92rem;font-weight:700;">{{ c.issued_by }}</div>
+            </div>
+            {% endwith %}
+          </div>
+        </div>
+        {% else %}
+        <div style="margin-top:22px;background:#fff5f5;border:1.5px solid #fca5a5;border-radius:16px;padding:22px;display:flex;align-items:center;gap:13px;">
+          <i class="fas fa-times-circle" style="color:#dc2626;font-size:1.8rem;flex-shrink:0;"></i>
+          <div>
+            <h4 style="color:#dc2626;font-family:var(--font-display);font-weight:700;margin-bottom:4px;">Certificate Not Found</h4>
+            <p style="color:#7f1d1d;font-size:0.84rem;margin:0;">
+              The code <strong>{{ code }}</strong> does not match any certificate in our records.
+              Please check the code and try again, or contact us at info@sibrahtech.com.ng
+            </p>
+          </div>
+        </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

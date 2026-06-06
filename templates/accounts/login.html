@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Student Login — SIBRAH{% endblock %}
+
+{% block content %}
+<div style="min-height:100vh;background:var(--gradient);display:flex;align-items:center;justify-content:center;padding:80px 1rem;">
+  <div style="background:#fff;border-radius:24px;width:100%;max-width:420px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.3);">
+
+    <div style="background:var(--gradient);padding:32px;text-align:center;">
+      <div style="width:52px;height:52px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;color:var(--primary);margin:0 auto 14px;">S</div>
+      <h2 style="font-family:var(--font-display);color:#fff;font-size:1.3rem;font-weight:800;margin:0;">Student Portal</h2>
+      <p style="color:rgba(255,255,255,0.6);font-size:0.84rem;margin-top:4px;">SIBRAH Technology Hub — Academy</p>
+    </div>
+
+    <div style="display:flex;background:var(--light);">
+      <a href="{% url 'accounts:login' %}"
+         style="flex:1;padding:13px;text-align:center;font-size:0.84rem;font-weight:700;color:var(--primary);text-decoration:none;background:#fff;border-bottom:3px solid var(--accent);">Sign In</a>
+      <a href="{% url 'accounts:register' %}"
+         style="flex:1;padding:13px;text-align:center;font-size:0.84rem;font-weight:600;color:var(--muted);text-decoration:none;">Register</a>
+    </div>
+
+    <div style="padding:28px;">
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="alert alert-{% if msg.tags == 'error' %}danger{% else %}{{ msg.tags }}{% endif %} py-2" style="font-size:0.86rem;">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.83rem;font-weight:600;display:block;margin-bottom:6px;">Student ID or Email</label>
+          <input type="text" name="username" class="form-control" placeholder="STU-2025-001 or email" required>
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="font-size:0.83rem;font-weight:600;display:block;margin-bottom:6px;">Password</label>
+          <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn-sibrah w-100" style="justify-content:center;font-size:1rem;">
+          Sign In <i class="fas fa-arrow-right ms-1"></i>
+        </button>
+      </form>
+
+      <div style="text-align:center;margin-top:16px;">
+        <a href="{% url 'accounts:forgot_password' %}" style="color:var(--muted);font-size:0.82rem;text-decoration:none;display:block;margin-bottom:8px;">
+          <i class="fas fa-key"></i> Forgot your password?
+        </a>
+        <p style="font-size:0.84rem;color:var(--muted);margin:0;">
+          Don't have an account?
+          <a href="{% url 'accounts:register' %}" style="color:var(--accent);font-weight:600;">Register here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

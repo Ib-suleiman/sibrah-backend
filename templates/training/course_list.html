@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}ICT Training Courses — SIBRAH{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">SIBRAH Academy</div>
+  <h1>Professional ICT Training</h1>
+  <p>Certified courses designed for today's digital economy. Learn from industry professionals.</p>
+</div>
+
+
+<div style="background:#fff;padding:60px 2rem;">
+  <div class="container-fluid">
+
+
+    <!-- BEGINNER -->
+    {% if beginners %}
+    <div style="margin-bottom:50px;">
+      <h2 style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--primary);margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--mid);display:flex;align-items:center;gap:10px;">
+        🟢 Beginner Courses
+        <span style="font-size:0.7rem;padding:3px 12px;border-radius:100px;font-weight:700;text-transform:uppercase;background:#dcfce7;color:#166534;">Beginner</span>
+      </h2>
+      <div class="row g-3">
+        {% for course in beginners %}
+        <div class="col-md-4 col-sm-6">
+          <div class="sibrah-card h-100">
+            <div style="font-size:2rem;margin-bottom:12px;">{{ course.icon }}</div>
+            <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">{{ course.title }}</h3>
+            <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:14px;font-size:0.82rem;color:var(--muted);">
+              <span><i class="fas fa-clock me-2" style="color:var(--accent);"></i>{{ course.duration }}</span>
+              <span><i class="fas fa-tag me-2" style="color:var(--accent);"></i>&#8358;{{ course.fee|floatformat:0 }}</span>
+              {% if course.tools %}<span><i class="fas fa-tools me-2" style="color:var(--accent);"></i>{{ course.tools }}</span>{% endif %}
+            </div>
+            <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);color:var(--accent);font-size:0.74rem;font-weight:600;padding:4px 10px;border-radius:6px;margin-bottom:14px;">
+              <i class="fas fa-certificate"></i> Certificate Included
+            </div>
+            <a href="{% url 'training:course_detail' course.slug %}" class="btn-sibrah w-100" style="justify-content:center;margin-top:auto;">
+              <i class="fas fa-user-plus"></i> Register Now
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- INTERMEDIATE -->
+    {% if intermediate %}
+    <div style="margin-bottom:50px;">
+      <h2 style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--primary);margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--mid);display:flex;align-items:center;gap:10px;">
+        🟡 Intermediate Courses
+        <span style="font-size:0.7rem;padding:3px 12px;border-radius:100px;font-weight:700;text-transform:uppercase;background:#fef3c7;color:#92400e;">Intermediate</span>
+      </h2>
+      <div class="row g-3">
+        {% for course in intermediate %}
+        <div class="col-md-4 col-sm-6">
+          <div class="sibrah-card h-100">
+            <div style="font-size:2rem;margin-bottom:12px;">{{ course.icon }}</div>
+            <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">{{ course.title }}</h3>
+            <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:14px;font-size:0.82rem;color:var(--muted);">
+              <span><i class="fas fa-clock me-2" style="color:var(--accent);"></i>{{ course.duration }}</span>
+              <span><i class="fas fa-tag me-2" style="color:var(--accent);"></i>&#8358;{{ course.fee|floatformat:0 }}</span>
+              {% if course.tools %}<span><i class="fas fa-tools me-2" style="color:var(--accent);"></i>{{ course.tools }}</span>{% endif %}
+            </div>
+            <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);color:var(--accent);font-size:0.74rem;font-weight:600;padding:4px 10px;border-radius:6px;margin-bottom:14px;">
+              <i class="fas fa-certificate"></i> Certificate Included
+            </div>
+            <a href="{% url 'training:course_detail' course.slug %}" class="btn-sibrah w-100" style="justify-content:center;">
+              <i class="fas fa-user-plus"></i> Register Now
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- ADVANCED -->
+    {% if advanced %}
+    <div>
+      <h2 style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--primary);margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--mid);display:flex;align-items:center;gap:10px;">
+        🔴 Advanced Courses
+        <span style="font-size:0.7rem;padding:3px 12px;border-radius:100px;font-weight:700;text-transform:uppercase;background:#ede9fe;color:#5b21b6;">Advanced</span>
+      </h2>
+      <div class="row g-3">
+        {% for course in advanced %}
+        <div class="col-md-4 col-sm-6">
+          <div class="sibrah-card h-100">
+            <div style="font-size:2rem;margin-bottom:12px;">{{ course.icon }}</div>
+            <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">{{ course.title }}</h3>
+            <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:14px;font-size:0.82rem;color:var(--muted);">
+              <span><i class="fas fa-clock me-2" style="color:var(--accent);"></i>{{ course.duration }}</span>
+              <span><i class="fas fa-tag me-2" style="color:var(--accent);"></i>&#8358;{{ course.fee|floatformat:0 }}</span>
+              {% if course.tools %}<span><i class="fas fa-tools me-2" style="color:var(--accent);"></i>{{ course.tools }}</span>{% endif %}
+            </div>
+            <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);color:var(--accent);font-size:0.74rem;font-weight:600;padding:4px 10px;border-radius:6px;margin-bottom:14px;">
+              <i class="fas fa-certificate"></i> Certificate Included
+            </div>
+            <a href="{% url 'training:course_detail' course.slug %}" class="btn-sibrah w-100" style="justify-content:center;">
+              <i class="fas fa-user-plus"></i> Register Now
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<!-- CERTIFICATE VERIFICATION BANNER -->
+<div style="background:linear-gradient(135deg,#0a2540,#1a4a6e);padding:18px 2rem;border-bottom:2px solid rgba(0,212,170,0.2);">
+  <div class="container-fluid">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:rgba(0,212,170,0.15);border:1.5px solid rgba(0,212,170,0.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">
+          🏆
+        </div>
+        <div>
+          <div style="color:#fff;font-family:var(--font-display);font-size:0.95rem;font-weight:700;">
+            Have a SIBRAH Certificate?
+          </div>
+          <div style="color:rgba(255,255,255,0.55);font-size:0.8rem;margin-top:2px;">
+            Instantly verify the authenticity of any SIBRAH-issued training certificate online.
+          </div>
+        </div>
+      </div>
+      <a href="{% url 'certificates:verify' %}"
+         style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--primary);padding:11px 22px;border-radius:8px;font-weight:700;font-size:0.88rem;text-decoration:none;white-space:nowrap;transition:all 0.2s;flex-shrink:0;"
+         onmouseover="this.style.background='#00b896';this.style.color='#fff'"
+         onmouseout="this.style.background='var(--accent)';this.style.color='var(--primary)'">
+        <i class="fas fa-shield-alt"></i> Verify Certificate
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

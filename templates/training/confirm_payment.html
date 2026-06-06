@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Submit Payment Proof — SIBRAH{% endblock %}
+{% block content %}
+<div class="page-hero"><div class="section-tag">Payment Confirmation</div><h1>Submit Payment Proof</h1></div>
+<section style="background:var(--light);padding:60px 2rem;">
+  <div style="max-width:560px;margin:0 auto;" class="sibrah-card">
+    <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:20px;">Upload Your Receipt</h3>
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+      <div class="mb-3"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Payment Reference</label><input type="text" name="payment_ref" class="form-control" placeholder="Reference you used"></div>
+      <div class="mb-4"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Receipt Screenshot *</label><input type="file" name="payment_proof" class="form-control" accept="image/*" required></div>
+      <button type="submit" class="btn-sibrah w-100" style="justify-content:center;"><i class="fas fa-upload"></i> Submit Proof</button>
+    </form>
+    <p style="text-align:center;margin-top:16px;font-size:0.84rem;color:var(--muted);">Or send receipt to <strong>+234 808 110 1992</strong> on WhatsApp</p>
+  </div>
+</section>
+{% endblock %}

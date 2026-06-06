@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Choose Payment Method — SIBRAH{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">Secure Payment</div>
+  <h1>How Would You Like to Pay?</h1>
+  <p>Choose your preferred payment method to complete your transaction.</p>
+</div>
+
+<section style="background:var(--light);padding:70px 2rem;">
+  <div style="max-width:640px;margin:0 auto;">
+
+    <!-- AMOUNT SUMMARY -->
+    <div style="background:linear-gradient(135deg,var(--primary),#1a4a6e);border-radius:16px;padding:22px;margin-bottom:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div>
+        <span style="font-size:0.8rem;color:rgba(255,255,255,0.6);">You are paying for</span><br>
+        <strong style="font-family:var(--font-display);color:#fff;font-size:1rem;">{{ item_name }}</strong>
+      </div>
+      <div style="text-align:right;">
+        <span style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Total Amount</span><br>
+        <strong style="font-family:var(--font-display);color:var(--accent);font-size:1.5rem;">&#8358;{{ amount|floatformat:0 }}</strong>
+      </div>
+    </div>
+
+    <!-- OPTION 1: PAYSTACK -->
+    <div class="sibrah-card mb-4" style="border:2px solid var(--accent);position:relative;overflow:hidden;">
+      <div style="position:absolute;top:14px;right:14px;background:var(--accent);color:var(--primary);font-size:0.7rem;font-weight:800;padding:3px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:0.06em;">Recommended</div>
+      <div style="display:flex;align-items:flex-start;gap:16px;">
+        <div style="width:52px;height:52px;border-radius:12px;background:rgba(0,212,170,0.1);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">💳</div>
+        <div style="flex:1;">
+          <h3 style="font-family:var(--font-display);font-size:1.05rem;font-weight:800;color:var(--primary);margin-bottom:6px;">Pay with Paystack</h3>
+          <p style="color:var(--muted);font-size:0.86rem;line-height:1.6;margin-bottom:16px;">
+            Instant payment via Debit/Credit Card, Bank Transfer, USSD, or Mobile Money.
+            Your payment is confirmed <strong>immediately</strong> — no waiting.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;">
+            <span style="background:var(--light);border:1px solid var(--mid);border-radius:8px;padding:5px 12px;font-size:0.76rem;font-weight:600;color:var(--primary);">💳 Card</span>
+            <span style="background:var(--light);border:1px solid var(--mid);border-radius:8px;padding:5px 12px;font-size:0.76rem;font-weight:600;color:var(--primary);">🏦 Bank Transfer</span>
+            <span style="background:var(--light);border:1px solid var(--mid);border-radius:8px;padding:5px 12px;font-size:0.76rem;font-weight:600;color:var(--primary);">📱 USSD</span>
+            <span style="background:var(--light);border:1px solid var(--mid);border-radius:8px;padding:5px 12px;font-size:0.76rem;font-weight:600;color:var(--primary);">📲 Mobile Money</span>
+          </div>
+          <a href="{{ pay_url }}" class="btn-sibrah">
+            <i class="fas fa-lock"></i> Pay &#8358;{{ amount|floatformat:0 }} Securely
+          </a>
+          <p style="font-size:0.74rem;color:var(--muted);margin-top:10px;">
+            <i class="fas fa-shield-alt" style="color:var(--accent);"></i>
+            Secured by Paystack — trusted by 200,000+ businesses in Africa
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPTION 2: BANK TRANSFER -->
+    <div class="sibrah-card">
+      <div style="display:flex;align-items:flex-start;gap:16px;">
+        <div style="width:52px;height:52px;border-radius:12px;background:rgba(0,212,170,0.08);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">🏦</div>
+        <div style="flex:1;">
+          <h3 style="font-family:var(--font-display);font-size:1.05rem;font-weight:800;color:var(--primary);margin-bottom:6px;">Pay by Direct Bank Transfer</h3>
+          <p style="color:var(--muted);font-size:0.86rem;line-height:1.6;margin-bottom:16px;">
+            Transfer directly to our ACCESS BANK account and send your receipt via WhatsApp.
+            Activation takes up to <strong>2 hours</strong> after payment confirmation.
+          </p>
+          <div style="background:var(--light);border-radius:10px;padding:14px;margin-bottom:16px;font-size:0.85rem;">
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--mid);">
+              <span style="color:var(--muted);">Bank</span><strong>ACCESS BANK</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--mid);">
+              <span style="color:var(--muted);">Account Name</span><strong>IBRAHIM BABA SULEIMAN</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;">
+              <span style="color:var(--muted);">Account Number</span>
+              <strong style="color:var(--accent);" id="bankAcct">1227425306</strong>
+            </div>
+          </div>
+          <a href="{{ bank_url }}" class="btn-sibrah-outline">
+            <i class="fas fa-university"></i> Continue with Bank Transfer
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HELP -->
+    <div style="text-align:center;margin-top:24px;">
+      <p style="color:var(--muted);font-size:0.84rem;">
+        Need help? WhatsApp us at
+        <a href="https://wa.me/2348081101992" style="color:var(--accent);font-weight:600;">+234 808 110 1992</a>
+      </p>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

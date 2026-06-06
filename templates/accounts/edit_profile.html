@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile — SIBRAH{% endblock %}
+{% block content %}
+<div class="page-hero"><div class="section-tag">Student Portal</div><h1>Edit Profile</h1></div>
+<section style="background:var(--light);padding:60px 2rem;">
+  <div style="max-width:580px;margin:0 auto;" class="sibrah-card">
+    <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:22px;">Update Your Details</h3>
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+      <div class="row g-3 mb-3">
+        <div class="col-md-6"><label class="form-label" style="font-size:0.84rem;font-weight:600;">First Name</label><input type="text" name="first_name" class="form-control" value="{{ form.first_name.value|default:'' }}"></div>
+        <div class="col-md-6"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Last Name</label><input type="text" name="last_name" class="form-control" value="{{ form.last_name.value|default:'' }}"></div>
+      </div>
+      <div class="mb-3"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Email</label><input type="email" name="email" class="form-control" value="{{ form.email.value|default:'' }}"></div>
+      <div class="mb-3"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Phone</label><input type="tel" name="phone" class="form-control" value="{{ form.phone.value|default:'' }}"></div>
+      <div class="mb-3"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Address</label><textarea name="address" class="form-control" rows="3">{{ form.address.value|default:'' }}</textarea></div>
+      <div class="mb-4"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Profile Picture</label><input type="file" name="profile_pic" class="form-control" accept="image/*"></div>
+      <div style="display:flex;gap:12px;">
+        <button type="submit" class="btn-sibrah"><i class="fas fa-save"></i> Save Changes</button>
+        <a href="{% url 'accounts:dashboard' %}" class="btn-sibrah-outline"><i class="fas fa-arrow-left"></i> Back</a>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

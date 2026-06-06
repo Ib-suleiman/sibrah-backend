@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Tech Shop — SIBRAH{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">Online Store</div>
+  <h1>SIBRAH Tech Shop</h1>
+  <p>Quality computers and accessories. Order online, pay by bank transfer.</p>
+</div>
+
+<!-- ORDER TRACKING BANNER -->
+<div style="background:linear-gradient(135deg,#0a2540,#1a4a6e);padding:18px 2rem;border-bottom:2px solid rgba(0,212,170,0.2);">
+  <div class="container-fluid">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:rgba(0,212,170,0.15);border:1.5px solid rgba(0,212,170,0.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">
+          📦
+        </div>
+        <div>
+          <div style="color:#fff;font-family:var(--font-display);font-size:0.95rem;font-weight:700;">
+            Already placed an order?
+          </div>
+          <div style="color:rgba(255,255,255,0.55);font-size:0.8rem;margin-top:2px;">
+            Enter your order number and email to check your delivery status in real time.
+          </div>
+        </div>
+      </div>
+      <a href="{% url 'shop:track_order' %}"
+         style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--primary);padding:11px 22px;border-radius:8px;font-weight:700;font-size:0.88rem;text-decoration:none;white-space:nowrap;transition:all 0.2s;flex-shrink:0;"
+         onmouseover="this.style.background='#00b896';this.style.color='#fff'"
+         onmouseout="this.style.background='var(--accent)';this.style.color='var(--primary)'">
+        <i class="fas fa-map-marker-alt"></i> Track My Order
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- SHOP CONTENT -->
+<section style="background:#fff;padding:50px 2rem;">
+  <div class="container-fluid">
+
+    <!-- CATEGORY FILTERS -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;">
+      <a href="{% url 'shop:shop_home' %}"
+         class="filter-pill {% if not active_cat %}active{% endif %}">
+        All Products
+      </a>
+      {% for cat in categories %}
+      <a href="?category={{ cat.slug }}"
+         class="filter-pill {% if active_cat == cat.slug %}active{% endif %}">
+        {{ cat.icon }} {{ cat.name }}
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div class="row g-3">
+      {% for product in products %}
+      <div class="col-lg-3 col-md-6">
+        <div class="sibrah-card h-100">
+          <div style="height:170px;background:var(--light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:14px;position:relative;">
+            {{ product.icon }}
+            {% if product.badge %}
+            <span style="position:absolute;top:10px;left:10px;background:var(--accent2);color:#fff;font-size:0.68rem;font-weight:700;padding:3px 10px;border-radius:100px;">
+              {{ product.badge }}
+            </span>
+            {% endif %}
+            {% if not product.in_stock %}
+            <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:700;color:#dc2626;">
+              Out of Stock
+            </div>
+            {% endif %}
+          </div>
+          <h4 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:var(--primary);margin-bottom:4px;">
+            {{ product.name }}
+          </h4>
+          <p style="font-size:0.76rem;color:var(--muted);margin-bottom:10px;">
+            {{ product.category.name }}
+          </p>
+          <div style="font-size:1rem;font-weight:800;color:var(--primary);font-family:var(--font-display);margin-bottom:14px;">
+            &#8358;{{ product.price|floatformat:0 }}
+            {% if product.old_price %}
+            <span style="font-size:0.76rem;font-weight:400;color:var(--muted);text-decoration:line-through;margin-left:6px;">
+              &#8358;{{ product.old_price|floatformat:0 }}
+            </span>
+            {% endif %}
+          </div>
+          {% if product.in_stock %}
+          <a href="{% url 'shop:place_order' product.slug %}"
+             class="btn-sibrah w-100" style="justify-content:center;font-size:0.86rem;">
+            <i class="fas fa-cart-plus"></i> Order Now
+          </a>
+          {% else %}
+          <button disabled
+                  style="width:100%;background:var(--mid);color:var(--muted);border:none;border-radius:8px;padding:10px;font-size:0.86rem;font-weight:600;cursor:not-allowed;">
+            Out of Stock
+          </button>
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center py-5">
+        <p style="color:var(--muted);">No products found in this category.</p>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+{% endblock %}

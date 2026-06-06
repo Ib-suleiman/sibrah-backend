@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Certificate {{ cert.code }} — SIBRAH{% endblock %}
+{% block content %}
+<section style="background:var(--light);padding:60px 2rem;">
+  <div style="max-width:680px;margin:0 auto;">
+    <div style="background:linear-gradient(135deg,#0a2540,#1a4a6e);border-radius:20px;padding:40px;text-align:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 20%,rgba(0,212,170,0.12) 0%,transparent 70%);"></div>
+      <div style="position:relative;">
+        <div style="font-size:3rem;margin-bottom:10px;">🏆</div>
+        <div style="color:var(--accent);font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;">Certificate of Completion</div>
+        <h1 style="font-family:var(--font-display);color:#fff;font-size:1.8rem;font-weight:800;margin-bottom:4px;">{{ cert.student.full_name }}</h1>
+        <p style="color:rgba(255,255,255,0.6);margin-bottom:20px;">has successfully completed</p>
+        <div style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:12px;padding:16px 24px;margin-bottom:20px;display:inline-block;">
+          <h2 style="font-family:var(--font-display);color:#fff;font-size:1.3rem;font-weight:800;margin:0;">{{ cert.course.title }}</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:20px;">
+          <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;"><div style="font-size:0.68rem;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:4px;">Grade</div><div style="color:#fff;font-weight:700;font-size:0.9rem;">{{ cert.get_grade_display }}</div></div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;"><div style="font-size:0.68rem;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:4px;">Issued</div><div style="color:#fff;font-weight:700;font-size:0.9rem;">{{ cert.issued_at|date:"M j, Y" }}</div></div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;"><div style="font-size:0.68rem;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:4px;">Code</div><div style="color:var(--accent);font-weight:700;font-size:0.78rem;">{{ cert.code }}</div></div>
+        </div>
+        <p style="color:rgba(255,255,255,0.5);font-size:0.8rem;margin-top:20px;">Issued by {{ cert.issued_by }}</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+      <button onclick="window.print()" class="btn-sibrah"><i class="fas fa-print"></i> Print Certificate</button>
+      <a href="{% url 'certificates:verify' %}?code={{ cert.code }}" class="btn-sibrah-outline"><i class="fas fa-shield-alt"></i> Verify Online</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

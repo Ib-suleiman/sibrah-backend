@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ enrollment.course.title }} Progress — SIBRAH{% endblock %}
+{% block content %}
+<div class="page-hero"><div class="section-tag">Course Progress</div><h1>{{ enrollment.course.title }}</h1></div>
+<section style="background:var(--light);padding:60px 2rem;">
+  <div style="max-width:700px;margin:0 auto;">
+    <div class="sibrah-card mb-4">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
+        <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--primary);margin:0;">Overall Progress</h3>
+        <span style="font-size:1.2rem;font-weight:800;color:var(--accent);font-family:var(--font-display);">{{ enrollment.progress }}%</span>
+      </div>
+      <div class="progress-sibrah" style="height:12px;"><div class="fill" style="width:{{ enrollment.progress }}%"></div></div>
+      <div style="margin-top:12px;font-size:0.82rem;color:var(--muted);">Status: <span class="badge-{{ enrollment.status }}">{{ enrollment.get_status_display }}</span></div>
+    </div>
+    {% if sessions %}
+    <h3 style="font-family:var(--font-display);font-size:1.05rem;font-weight:700;color:var(--primary);margin-bottom:16px;">Class Sessions</h3>
+    {% for session in sessions %}
+    <div class="sibrah-card mb-3" style="display:flex;align-items:center;gap:16px;">
+      <div style="width:40px;height:40px;border-radius:50%;background:{% if session.is_completed %}var(--accent){% else %}var(--mid){% endif %};display:flex;align-items:center;justify-content:center;color:{% if session.is_completed %}var(--primary){% else %}var(--muted){% endif %};font-weight:800;font-size:0.9rem;flex-shrink:0;">{{ session.session_no }}</div>
+      <div style="flex:1;"><h4 style="font-size:0.9rem;font-weight:700;color:var(--primary);margin-bottom:2px;">{{ session.title }}</h4><p style="font-size:0.78rem;color:var(--muted);margin:0;">{{ session.scheduled_at|date:"D, M j, Y — g:i A" }}</p></div>
+      {% if session.zoom_link %}<a href="{{ session.zoom_link }}" target="_blank" class="btn-sibrah" style="padding:7px 14px;font-size:0.78rem;"><i class="fas fa-video"></i> Join</a>{% endif %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <p style="color:var(--muted);font-size:0.9rem;">Session schedule will be available after your enrollment is activated.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,177 @@
+# SIBRAH COMPUTERS & TECHNOLOGY HUB
+# Django Backend — Windows Setup Guide
+# =====================================================
+# Read every step carefully. This gets you fully running.
+
+
+## STEP 1 — OPEN COMMAND PROMPT
+# Press Win + R → type cmd → press Enter
+# OR search "Command Prompt" in Start menu
+
+
+## STEP 2 — NAVIGATE TO THE PROJECT FOLDER
+# Replace the path below with where you saved the sibrah_backend folder.
+# Example:
+
+cd C:\Users\YourName\Desktop\sibrah_backend
+
+
+## STEP 3 — CREATE A VIRTUAL ENVIRONMENT
+python -m venv venv
+
+
+## STEP 4 — ACTIVATE THE VIRTUAL ENVIRONMENT
+venv\Scripts\activate
+
+# You should see (venv) appear at the start of your command line.
+# IMPORTANT: Always activate this before running any Django command.
+
+
+## STEP 5 — INSTALL ALL DEPENDENCIES
+pip install -r requirements.txt
+
+# This installs Django, Pillow, allauth, whitenoise, and all other packages.
+# It may take 1–3 minutes depending on your internet speed.
+
+
+## STEP 6 — RUN DATABASE MIGRATIONS
+python manage.py makemigrations accounts
+python manage.py makemigrations training
+python manage.py makemigrations shop
+python manage.py makemigrations certificates
+python manage.py makemigrations blog
+python manage.py makemigrations core
+python manage.py migrate
+
+# This creates your sibrah.db SQLite database file with all tables.
+
+
+## STEP 7 — SEED THE DATABASE WITH INITIAL DATA
+python manage.py seed_sibrah
+
+# This creates:
+#   - Admin user (username: admin, password: sibrah@2025)
+#   - All 9 courses (Beginner, Intermediate, Advanced)
+#   - All 8 shop products (Laptops, Printers, Accessories, Networking)
+#   - 4 blog posts
+
+
+## STEP 8 — START THE DEVELOPMENT SERVER
+python manage.py runserver
+
+# Open your browser and visit:
+#   http://127.0.0.1:8000/           ← Main website
+#   http://127.0.0.1:8000/admin/     ← Admin dashboard
+#   http://127.0.0.1:8000/portal/    ← Student portal
+#   http://127.0.0.1:8000/training/  ← Training courses
+#   http://127.0.0.1:8000/shop/      ← Online shop
+#   http://127.0.0.1:8000/certificates/verify/ ← Certificate verification
+
+
+## =====================================================
+## ADMIN LOGIN CREDENTIALS
+## =====================================================
+## URL:      http://127.0.0.1:8000/admin/
+## Username: admin
+## Password: sibrah@2025
+##
+## CHANGE THIS PASSWORD immediately after first login!
+## Admin → Users → admin → Change Password
+
+
+## =====================================================
+## STUDENT PORTAL TEST
+## =====================================================
+## Go to http://127.0.0.1:8000/portal/register/
+## Create a student account to test the portal.
+
+
+## =====================================================
+## MANAGING YOUR WEBSITE FROM THE ADMIN
+## =====================================================
+## Everything is manageable from http://127.0.0.1:8000/admin/
+##
+## COURSES:
+##   Training → Courses → Add Course (set title, fee, duration, level, icon)
+##
+## PRODUCTS:
+##   Shop → Products → Add Product (set name, price, stock, category)
+##
+## ORDERS:
+##   Shop → Orders → View and update order status (pending → confirmed → delivered)
+##
+## STUDENTS:
+##   Accounts → SIBRAH Users → View all registered students
+##
+## ENROLLMENTS:
+##   Training → Enrollments → Activate enrollment after payment confirmed
+##   Change Status from "Pending Payment" → "Active"
+##
+## CERTIFICATES:
+##   Certificates → Certificates → Issue certificate to a student
+##   Set: Student, Course, Grade, Instructor
+##
+## BLOG POSTS:
+##   Blog → Posts → Add/edit articles. Set is_published = True to go live.
+
+
+## =====================================================
+## CONFIRMING A PAYMENT (WORKFLOW)
+## =====================================================
+## 1. Student enrolls in a course or orders a product.
+## 2. Student pays to ACCESS BANK (1227425306) and sends WhatsApp proof.
+## 3. You log into Admin Panel.
+## 4. For courses: Training → Enrollments → Find enrollment → Change status to "Active"
+## 5. For orders:  Shop → Orders → Find order → Change status to "Confirmed"
+## 6. Done! Student can see their active enrollment in their portal dashboard.
+
+
+## =====================================================
+## HOW TO ISSUE A CERTIFICATE
+## =====================================================
+## 1. Admin → Certificates → Certificates → Add Certificate
+## 2. Select: Student, Course, Enrollment, Grade, Instructor name
+## 3. Save → A unique code is auto-generated (e.g. SIBRAH-2025-PY-001)
+## 4. Student can verify it at: /certificates/verify/
+## 5. Share the code with the student via email or WhatsApp.
+
+
+## =====================================================
+## API ENDPOINTS (for the frontend HTML file)
+## =====================================================
+## GET /api/training/courses/         ← All active courses (JSON)
+## GET /api/shop/products/            ← All products (JSON)
+## GET /api/shop/categories/          ← Product categories (JSON)
+## GET /api/certificates/verify/?code=SIBRAH-2025-PY-001  ← Verify cert (JSON)
+
+
+## =====================================================
+## TROUBLESHOOTING
+## =====================================================
+##
+## Error: "No module named django"
+##   → Make sure you activated the virtual environment: venv\Scripts\activate
+##
+## Error: "Table doesn't exist"
+##   → Run migrations again: python manage.py migrate
+##
+## Error: "Port already in use"
+##   → Use a different port: python manage.py runserver 8080
+##
+## Error: "ModuleNotFoundError: No module named 'apps'"
+##   → Make sure you are running the command FROM inside the sibrah_backend folder
+##   → cd C:\path\to\sibrah_backend → then run python manage.py runserver
+##
+## Forgot admin password?
+##   → python manage.py changepassword admin
+
+
+## =====================================================
+## NEXT STEPS AFTER SETUP
+## =====================================================
+## Phase 4 → Paystack integration (accept card payments online)
+## Phase 5 → Deploy to a live server (Render, Railway, or VPS)
+## Phase 6 → Custom domain (sibrahtech.com.ng)
+## Phase 7 → Email notifications (send enrollment confirmation emails)
+##
+## Ask Claude to help with any of these next steps!

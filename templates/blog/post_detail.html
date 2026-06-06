@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} — SIBRAH Blog{% endblock %}
+{% block content %}
+<div class="page-hero"><div class="section-tag">{{ post.category.name }}</div><h1>{{ post.title }}</h1><p>{{ post.published_at|date:"F j, Y" }} &bull; {{ post.read_time }} min read</p></div>
+<section style="background:#fff;padding:60px 2rem;">
+  <div style="max-width:780px;margin:0 auto;">
+    <div style="height:280px;background:var(--gradient);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:5rem;margin-bottom:36px;">{{ post.icon }}</div>
+    <div style="color:var(--muted);line-height:1.9;font-size:0.98rem;">{{ post.content|linebreaks }}</div>
+    {% if related %}
+    <hr style="margin:40px 0;">
+    <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:20px;">Related Articles</h3>
+    <div class="row g-3">
+      {% for r in related %}<div class="col-md-4"><div class="sibrah-card" style="cursor:pointer;" onclick="window.location='{% url 'blog:post_detail' r.slug %}'"><div style="font-size:2rem;margin-bottom:10px;">{{ r.icon }}</div><h4 style="font-family:var(--font-display);font-size:0.9rem;font-weight:700;color:var(--primary);line-height:1.4;margin:0;">{{ r.title }}</h4></div></div>{% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

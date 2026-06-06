@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Order {{ product.name }} — SIBRAH{% endblock %}
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">Place Order</div>
+  <h1>Order {{ product.name }}</h1>
+  <p>Fill in your details to place your order. Payment by bank transfer.</p>
+</div>
+<section style="background:var(--light);padding:60px 2rem;">
+  <div style="max-width:600px;margin:0 auto;">
+    <div style="background:var(--gradient);border-radius:16px;padding:20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;">
+      <div><span style="font-size:0.82rem;color:rgba(255,255,255,0.6);">You are ordering</span><br><strong style="font-family:var(--font-display);color:#fff;font-size:1rem;">{{ product.icon }} {{ product.name }}</strong></div>
+      <div style="text-align:right;"><span style="font-size:0.82rem;color:rgba(255,255,255,0.6);">Price</span><br><strong style="font-family:var(--font-display);color:var(--accent);font-size:1.4rem;">&#8358;{{ product.price|floatformat:0 }}</strong></div>
+    </div>
+    <div class="sibrah-card">
+      <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:20px;">Your Details</h3>
+      <form method="post">{% csrf_token %}
+        <div class="mb-3"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Full Name *</label><input type="text" name="customer_name" class="form-control" value="{{ form.customer_name.value|default:'' }}" required></div>
+        <div class="row g-3 mb-3">
+          <div class="col-md-6"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Email *</label><input type="email" name="customer_email" class="form-control" value="{{ form.customer_email.value|default:'' }}" required></div>
+          <div class="col-md-6"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Phone *</label><input type="tel" name="customer_phone" class="form-control" value="{{ form.customer_phone.value|default:'' }}" required></div>
+        </div>
+        <div class="mb-3"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Delivery Address</label><textarea name="delivery_address" class="form-control" rows="3" placeholder="Your delivery address (optional for pickup)"></textarea></div>
+        <div class="mb-4"><label class="form-label" style="font-size:0.84rem;font-weight:600;">Additional Notes</label><textarea name="notes" class="form-control" rows="2" placeholder="Any special requirements..."></textarea></div>
+        <button type="submit" class="btn-sibrah w-100" style="justify-content:center;"><i class="fas fa-arrow-right"></i> Proceed to Payment</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

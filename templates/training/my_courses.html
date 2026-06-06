@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}My Courses — SIBRAH{% endblock %}
+{% block content %}
+<div class="page-hero"><div class="section-tag">Student Portal</div><h1>My Courses</h1></div>
+<section style="background:var(--light);padding:60px 2rem;">
+  <div class="container-fluid">
+    <div class="row g-3">
+      {% for enr in enrollments %}
+      <div class="col-md-6 col-lg-4">
+        <div class="sibrah-card h-100">
+          <div style="font-size:2rem;margin-bottom:10px;">{{ enr.course.icon }}</div>
+          <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:8px;">{{ enr.course.title }}</h3>
+          <span class="badge-{{ enr.status }}">{{ enr.get_status_display }}</span>
+          <div style="margin:12px 0 6px;font-size:0.8rem;color:var(--muted);">
+            Progress: {% if enr.status == 'completed' %}100{% else %}{{ enr.progress }}{% endif %}%
+          </div>
+          <div class="progress-sibrah mb-3">
+            <div class="fill" style="width:{% if enr.status == 'completed' %}100{% else %}{{ enr.progress }}{% endif %}%;
+              {% if enr.status == 'completed' %}background:#16a34a;{% endif %}">
+            </div>
+          </div>
+          <div style="font-size:0.78rem;color:var(--muted);">Enrolled: {{ enr.enrolled_at|date:"M j, Y" }}</div>
+          {% if enr.status == 'pending' %}<a href="{% url 'training:payment_instructions' enr.pk %}" class="btn-sibrah w-100 mt-3" style="justify-content:center;font-size:0.84rem;"><i class="fas fa-credit-card"></i> Complete Payment</a>{% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center py-5">
+        <p style="color:var(--muted);margin-bottom:16px;">You haven't enrolled in any courses yet.</p>
+        <a href="{% url 'training:course_list' %}" class="btn-sibrah"><i class="fas fa-graduation-cap"></i> Browse Courses</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

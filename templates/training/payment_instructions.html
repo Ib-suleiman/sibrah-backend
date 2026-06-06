@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Payment Instructions — SIBRAH{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+  <div class="section-tag">Enrollment</div>
+  <h1>Complete Your Payment</h1>
+  <p>Your enrollment is reserved. Complete payment to activate your spot.</p>
+</div>
+
+<div style="background:var(--light);padding:60px 2rem;">
+  <div style="max-width:620px;margin:0 auto;">
+
+    <div style="background:linear-gradient(135deg,var(--primary),#1a4a6e);border-radius:16px;padding:22px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <span style="font-size:0.82rem;color:rgba(255,255,255,0.6);">Enrolling in</span><br>
+        <strong style="font-family:var(--font-display);color:#fff;font-size:1rem;">{{ enrollment.course.icon }} {{ enrollment.course.title }}</strong>
+      </div>
+      <div style="text-align:right;">
+        <span style="font-size:0.82rem;color:rgba(255,255,255,0.6);">Course Fee</span><br>
+        <strong style="font-family:var(--font-display);color:var(--accent);font-size:1.4rem;">&#8358;{{ enrollment.course.fee|floatformat:0 }}</strong>
+      </div>
+    </div>
+
+    <div class="sibrah-card mb-4">
+      <h4 style="font-family:var(--font-display);color:var(--primary);margin-bottom:16px;">🏦 ACCESS BANK — Transfer Details</h4>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--mid);font-size:0.88rem;">
+        <span style="color:var(--muted);">Bank Name</span><strong>ACCESS BANK</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--mid);font-size:0.88rem;">
+        <span style="color:var(--muted);">Account Name</span><strong>IBRAHIM BABA SULEIMAN</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--mid);font-size:0.88rem;">
+        <span style="color:var(--muted);">Account Number</span>
+        <span style="display:flex;align-items:center;gap:8px;">
+          <strong id="acct">1227425306</strong>
+          <button onclick="copyEl('acct')" style="background:rgba(0,212,170,0.1);border:none;border-radius:6px;padding:3px 9px;color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;">Copy</button>
+        </span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--mid);font-size:0.88rem;">
+        <span style="color:var(--muted);">Amount</span>
+        <strong style="color:var(--accent);">&#8358;{{ enrollment.course.fee|floatformat:0 }}</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;font-size:0.88rem;">
+        <span style="color:var(--muted);">Reference / Narration</span>
+        <span style="display:flex;align-items:center;gap:8px;">
+          <strong id="ref">{{ ref }}</strong>
+          <button onclick="copyEl('ref')" style="background:rgba(0,212,170,0.1);border:none;border-radius:6px;padding:3px 9px;color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;">Copy</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="sibrah-card mb-4">
+      <h5 style="font-size:0.82rem;font-weight:700;color:var(--primary);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em;">Steps to Complete Payment</h5>
+      <ol style="padding-left:18px;color:var(--muted);font-size:0.86rem;line-height:1.8;margin:0;">
+        <li>Open your banking app or dial your bank's USSD code.</li>
+        <li>Transfer <strong>&#8358;{{ enrollment.course.fee|floatformat:0 }}</strong> to the account above.</li>
+        <li>Use <strong>{{ ref }}</strong> as your payment narration.</li>
+        <li>Screenshot your receipt after the transfer.</li>
+        <li>Upload your screenshot below OR send to <strong>+234 808 110 1992</strong> on WhatsApp.</li>
+        <li>We will verify and activate your enrollment within <strong>2 hours</strong>.</li>
+      </ol>
+    </div>
+
+    <div class="sibrah-card mb-4">
+      <h4 style="font-family:var(--font-display);color:var(--primary);margin-bottom:16px;">Submit Payment Proof</h4>
+      <form method="post" action="{% url 'training:confirm_payment' enrollment.pk %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.84rem;font-weight:600;display:block;margin-bottom:6px;">Payment Reference Used</label>
+          <input type="text" name="payment_ref" value="{{ ref }}" class="form-control" placeholder="Reference number">
+        </div>
+        <div style="margin-bottom:18px;">
+          <label style="font-size:0.84rem;font-weight:600;display:block;margin-bottom:6px;">Upload Receipt Screenshot *</label>
+          <input type="file" name="payment_proof" accept="image/*" class="form-control" required>
+          <small style="color:var(--muted);font-size:0.78rem;">Upload a clear screenshot of your bank transfer receipt</small>
+        </div>
+        <button type="submit" class="btn-sibrah w-100" style="justify-content:center;">
+          <i class="fas fa-check"></i> Submit Payment Proof
+        </button>
+      </form>
+    </div>
+
+    <div style="text-align:center;">
+      {% with msg="Hello SIBRAH,%0A%0AI have paid for:%0ACourse: "|add:enrollment.course.title|add:"%0AAmount: %E2%82%A6"|add:enrollment.course.fee|stringformat:"s"|add:"%0AReference: "|add:ref|add:"%0A%0APlease confirm my enrollment. Thank you!" %}
+      <a href="https://wa.me/{{ company.whatsapp }}?text={{ msg }}"
+         target="_blank"
+         style="display:inline-flex;align-items:center;gap:10px;background:#25d366;color:#fff;padding:12px 24px;border-radius:10px;font-weight:600;font-size:0.9rem;text-decoration:none;">
+        <i class="fab fa-whatsapp"></i> Confirm via WhatsApp Instead
+      </a>
+      {% endwith %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function copyEl(id){
+  var t=document.getElementById(id).textContent;
+  navigator.clipboard.writeText(t).then(function(){alert('Copied: '+t);});
+}
+</script>
+{% endblock %}
