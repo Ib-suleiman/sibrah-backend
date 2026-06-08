@@ -32,6 +32,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
 
+    # Rich Text Editor
+    'ckeditor',
+    'ckeditor_uploader',
+
     # SIBRAH Apps
     'apps.core',
     'apps.accounts',
@@ -156,4 +160,29 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 12,
+}
+
+# ── CKEDITOR ──────────────────────────────────────────────────────────
+CKEDITOR_UPLOAD_PATH = 'uploads/blog/'
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['Image', 'Table', 'HorizontalRule'],
+            ['Format', 'FontSize'],
+            ['TextColor', 'BGColor'],
+            ['Maximize'],
+            ['Source'],
+        ],
+        'extraPlugins': ','.join(['uploadimage', 'image2']),
+        'height': 400,
+        'width': '100%',
+        'removePlugins': 'elementspath',
+        'resize_enabled': False,
+    }
 }

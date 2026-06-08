@@ -13,6 +13,9 @@ admin.site.site_title   = "SIBRAH Admin Portal"
 admin.site.index_title  = "Welcome to SIBRAH Admin"
 
 urlpatterns = [
+    # CKEditor
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+
     # Django admin
     path('admin/', admin.site.urls),
 

@@ -85,7 +85,9 @@
 
     <!-- CONTENT -->
     <div style="color:var(--text);line-height:1.9;font-size:1rem;">
-      {{ post.content|linebreaks }}
+      <div class="blog-content">
+        {{ post.content|safe }}
+      </div>
     </div>
 
     <!-- SHARE BUTTONS -->
