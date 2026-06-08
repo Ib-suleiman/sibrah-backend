@@ -6,6 +6,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block title %}SIBRAH Computers & Technology Hub{% endblock %}</title>
 <meta name="description" content="{% block meta_desc %}SIBRAH Computers and Technology Hub — Empowering Businesses Through Technology, Innovation and Digital Solutions. Abuja, Nigeria.{% endblock %}">
+<meta name="keywords" content="{% block meta_keywords %}SIBRAH, computers, technology, ICT training, laptop repair, software development, Abuja, Nigeria, digital solutions{% endblock %}">
+<meta name="author" content="SIBRAH Computers & Technology Hub">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{% block canonical %}https://sibrahtech.com.ng{% endblock %}">
+
+<!-- Open Graph (Facebook, WhatsApp, LinkedIn previews) -->
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:title" content="{% block og_title %}SIBRAH Computers & Technology Hub{% endblock %}">
+<meta property="og:description" content="{% block og_desc %}SIBRAH Computers and Technology Hub — Empowering Businesses Through Technology, Innovation and Digital Solutions. Abuja, Nigeria.{% endblock %}">
+<meta property="og:url" content="{% block og_url %}https://sibrahtech.com.ng{% endblock %}">
+<meta property="og:image" content="{% block og_image %}https://sibrahtech.com.ng/static/sibrah_logo.png{% endblock %}">
+<meta property="og:site_name" content="SIBRAH Computers & Technology Hub">
+<meta property="og:locale" content="en_NG">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% block twitter_title %}SIBRAH Computers & Technology Hub{% endblock %}">
+<meta name="twitter:description" content="{% block twitter_desc %}Empowering Businesses Through Technology, Innovation and Digital Solutions. Abuja, Nigeria.{% endblock %}">
+<meta name="twitter:image" content="{% block twitter_image %}https://sibrahtech.com.ng/static/sibrah_logo.png{% endblock %}">
+
+<!-- Schema.org Structured Data -->
+{% block schema_org %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "SIBRAH Computers & Technology Hub",
+  "description": "Leading ICT solutions company providing computer sales, repairs, software development, business center services, professional training, and technology consultancy.",
+  "url": "https://sibrahtech.com.ng",
+  "telephone": "+2348081101992",
+  "email": "info@sibrahtech.com.ng",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Abuja",
+    "addressCountry": "NG"
+  },
+  "openingHours": "Mo-Sa 08:00-18:00",
+  "sameAs": [
+    "https://facebook.com/sibrahtech",
+    "https://instagram.com/sibrahtech",
+    "https://linkedin.com/company/sibrahtech"
+  ]
+}
+</script>
+{% endblock %}
 <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -99,8 +144,8 @@ body { font-family: var(--font-body); background: var(--light); }
     <a href="{% url 'training:course_list' %}" class="nav-link-item {% if 'training' in request.path %}active-link{% endif %}">Training</a>
     <a href="{% url 'shop:shop_home' %}" class="nav-link-item {% if 'shop' in request.path %}active-link{% endif %}">Shop</a>
     <a href="{% url 'blog:post_list' %}" class="nav-link-item {% if 'blog' in request.path %}active-link{% endif %}">Blog</a>
-    {% comment %} <a href="{% url 'certificates:verify' %}" class="nav-link-item">Verify Cert</a>
-    <a href="{% url 'shop:track_order' %}" class="nav-link-item">Track Order</a> {% endcomment %}
+    <a href="{% url 'certificates:verify' %}" class="nav-link-item">Verify Cert</a>
+    <a href="{% url 'shop:track_order' %}" class="nav-link-item">Track Order</a>
     {% if user.is_authenticated %}
       {% if user.is_admin_user %}
         <a href="{% url 'accounts:admin_dashboard' %}" class="nav-link-item"><i class="fas fa-cog"></i> Admin</a>
@@ -165,7 +210,7 @@ body { font-family: var(--font-body); background: var(--light); }
         <a href="{% url 'core:services' %}">Repairs</a>
         <a href="{% url 'core:services' %}">Software Dev</a>
         <a href="{% url 'training:course_list' %}">ICT Training</a>
-        <a href="{% url 'certificates:verify' %}">🏆 Verify Certificate</a>
+        <a href="{% url 'certificates:verify' %}">Verify Cert</a>
       </div>
       <div class="col-md-3">
         <h4>Contact</h4>
@@ -173,36 +218,36 @@ body { font-family: var(--font-body); background: var(--light); }
         <a href="tel:+2348081101992"><i class="fas fa-phone me-2"></i>+234 808 110 1992</a>
         <a href="mailto:info@sibrahtech.com.ng"><i class="fas fa-envelope me-2"></i>info@sibrahtech.com.ng</a>
         <a href="https://wa.me/2348081101992" target="_blank"><i class="fab fa-whatsapp me-2"></i>WhatsApp Us</a>
-        {% comment %} <a href="#">🕒 Mon–Sat: 8AM–6PM</a>
-        <a href="{% url 'certificates:verify' %}">🏆 Verify Certificate</a> {% endcomment %}
+        <a href="#">🕒 Mon–Sat: 8AM–6PM</a>
+        <a href="{% url 'certificates:verify' %}">🏆 Verify Certificate</a>
         <div style="margin-top:16px;">
           <p style="color:rgba(255,255,255,0.4);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Follow Us</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <a href="https://www.facebook.com/sibrah.tech" target="_blank" title="Facebook"
+            <a href="#" target="_blank" title="Facebook"
                style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;transition:all 0.2s;"
                onmouseover="this.style.background='#1877f2';this.style.color='#fff'"
                onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.7)'">
               <i class="fab fa-facebook-f"></i>
             </a>
-            <a href="https://www.instagram.com/sibrah.tech" target="_blank" title="Instagram"
+            <a href="#" target="_blank" title="Instagram"
                style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;transition:all 0.2s;"
                onmouseover="this.style.background='#e1306c';this.style.color='#fff'"
                onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.7)'">
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://www.x.com/@sibrah.tech" target="_blank" title="X"
+            <a href="#" target="_blank" title="Twitter / X"
                style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;transition:all 0.2s;"
                onmouseover="this.style.background='#000';this.style.color='#fff'"
                onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.7)'">
               <i class="fab fa-twitter"></i>
             </a>
-            <a href="https://www.tiktok.com/@sibrah.tech" target="_blank" title="TikTok"
+            <a href="#" target="_blank" title="TikTok"
                style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;transition:all 0.2s;"
                onmouseover="this.style.background='#010101';this.style.color='#69c9d0'"
                onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.7)'">
               <i class="fab fa-tiktok"></i>
             </a>
-            <a href="https://www.linkedin.com/in/ibrahim-suleiman-81385a1b7" target="_blank" title="LinkedIn"
+            <a href="#" target="_blank" title="LinkedIn"
                style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;transition:all 0.2s;"
                onmouseover="this.style.background='#0a66c2';this.style.color='#fff'"
                onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.7)'">
@@ -213,8 +258,8 @@ body { font-family: var(--font-body); background: var(--light); }
       </div>
     </div>
     <div class="footer-bottom d-flex justify-content-between flex-wrap gap-2">
-      <p>&copy; 2026 <span style="color:var(--accent)">SIBRAH Computers &amp; Technology Hub</span>. All rights reserved.</p>
-      <p>Built by SIBRAH Computers &amp; Technology Hub &mdash; Abuja, Nigeria</p>
+      <p>&copy; 2025 <span style="color:var(--accent)">SIBRAH Computers &amp; Technology Hub</span>. All rights reserved.</p>
+      <p>Built with Django &amp; Python &mdash; Abuja, Nigeria</p>
     </div>
   </div>
 </footer>
