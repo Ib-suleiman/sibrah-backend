@@ -17,7 +17,7 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
     # Django admin
-    path('admin/', admin.site.urls),
+    path('hajarami/', admin.site.urls),
 
     # Allauth authentication
     path('accounts/', include('allauth.urls')),
