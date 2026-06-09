@@ -1,11 +1,18 @@
 {% extends "base.html" %}
-{% block title %}About Us — SIBRAH{% endblock %}
+{% load static %}
+{% block title %}About Us — SIBRAH Computers & Technology Hub{% endblock %}
+{% block meta_desc %}Learn about SIBRAH Computers & Technology Hub, founded by Ibrahim B. Suleiman. A leading ICT company in Abuja, Nigeria providing technology solutions, training and consultancy.{% endblock %}
+
 {% block content %}
+
+<!-- PAGE HERO -->
 <div class="page-hero">
   <div class="section-tag">Our Story</div>
   <h1>About SIBRAH Computers &amp; Technology Hub</h1>
   <p>A leading ICT company dedicated to empowering individuals and organizations through technology in Abuja, Nigeria.</p>
 </div>
+
+<!-- COMPANY PROFILE -->
 <section style="background:#fff;padding:70px 2rem;">
   <div style="max-width:820px;margin:0 auto;">
     <div class="section-tag">Company Profile</div>
@@ -15,22 +22,195 @@
     <p style="color:var(--muted);line-height:1.85;">With a team of certified and experienced professionals, we deliver solutions that are reliable, scalable, and tailored to the unique needs of each client. Contact us at <strong style="color:var(--accent)">info@sibrahtech.com.ng</strong> or <strong style="color:var(--accent)">+234 808 110 1992</strong>.</p>
   </div>
 </section>
+
+<!-- FOUNDER SECTION -->
 <section style="background:var(--light);padding:70px 2rem;">
   <div class="container-fluid">
-    <div class="text-center mb-5"><div class="section-tag">Direction</div><h2 class="section-title mt-2">Vision &amp; Mission</h2></div>
-    <div class="row g-3">
-      <div class="col-md-4"><div class="sibrah-card h-100"><div style="font-size:2rem;margin-bottom:12px;">🎯</div><h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Our Vision</h3><p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">To become a globally recognized technology hub delivering innovative digital solutions that empower individuals, businesses, and communities across Africa.</p></div></div>
-      <div class="col-md-4"><div class="sibrah-card h-100"><div style="font-size:2rem;margin-bottom:12px;">🚀</div><h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Our Mission</h3><p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">To provide quality ICT services, training, and technology solutions that empower individuals and organizations to achieve their goals through the power of digital technology.</p></div></div>
-      <div class="col-md-4"><div class="sibrah-card h-100"><div style="font-size:2rem;margin-bottom:12px;">📋</div><h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Our Approach</h3><p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">We combine technical expertise with deep understanding of client needs to deliver customized, practical solutions that create real and measurable impact for every client we serve.</p></div></div>
+    <div class="text-center mb-5">
+      <div class="section-tag">Leadership</div>
+      <h2 class="section-title mt-2">Meet the Founder</h2>
+    </div>
+
+    <div style="max-width:1000px;margin:0 auto;">
+      <div class="row align-items-start g-5">
+
+        <!-- PHOTO COLUMN -->
+        <div class="col-lg-4 text-center">
+          <div style="position:relative;display:inline-block;">
+            <!-- Decorative ring -->
+            <div style="position:absolute;inset:-8px;border-radius:50%;border:3px solid rgba(0,212,170,0.3);"></div>
+            <div style="position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(0,212,170,0.15);"></div>
+            <!-- Photo -->
+            <img src="{% static 'founder_photo.jpg' %}"
+                 alt="Ibrahim B. Suleiman — Founder & CEO, SIBRAH Computers & Technology Hub"
+                 style="width:240px;height:240px;border-radius:50%;object-fit:cover;object-position:top center;border:4px solid var(--accent);box-shadow:0 8px 40px rgba(0,212,170,0.25);position:relative;z-index:1;">
+          </div>
+
+          <!-- Name & Title -->
+          <div style="margin-top:20px;">
+            <h3 style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--primary);margin-bottom:4px;">
+              Ibrahim B. Suleiman
+            </h3>
+            <p style="color:var(--accent);font-size:0.86rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;">
+              Founder &amp; Chief Executive Officer
+            </p>
+            <p style="color:var(--muted);font-size:0.82rem;margin-bottom:16px;">
+              SIBRAH Computers &amp; Technology Hub
+            </p>
+          </div>
+
+          <!-- Qualifications -->
+          <div style="background:#fff;border-radius:14px;padding:18px;border:1.5px solid var(--mid);text-align:left;">
+            <h4 style="font-family:var(--font-display);font-size:0.88rem;font-weight:700;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+              <i class="fas fa-graduation-cap" style="color:var(--accent);"></i> Qualifications
+            </h4>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--mid);">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+              <span style="font-size:0.84rem;color:var(--text);font-weight:500;">B.Sc Computer Science</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+              <span style="font-size:0.84rem;color:var(--text);font-weight:500;">M.Sc Information Technology</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BIO COLUMN -->
+        <div class="col-lg-8">
+
+          <!-- Bio -->
+          <div style="margin-bottom:28px;">
+            <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+              <i class="fas fa-user" style="color:var(--accent);"></i> About Ibrahim
+            </h4>
+            <p style="color:var(--muted);line-height:1.85;font-size:0.95rem;margin-bottom:14px;">
+              Ibrahim B. Suleiman is a technology professional, educator, and entrepreneur with a background in Computer Science. He is the founder of SIBRAH Computers &amp; Technology Hub, a technology solutions company focused on computer services, software development, digital skills training, and IT consultancy.
+            </p>
+            <p style="color:var(--muted);line-height:1.85;font-size:0.95rem;">
+              He is passionate about leveraging technology to solve real-world problems and empower individuals and organizations through digital innovation.
+            </p>
+          </div>
+
+          <!-- Expertise -->
+          <div style="margin-bottom:28px;">
+            <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+              <i class="fas fa-star" style="color:var(--accent);"></i> Areas of Expertise
+            </h4>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              {% for skill in founder_skills %}
+              <span style="background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);color:var(--primary);padding:5px 14px;border-radius:100px;font-size:0.8rem;font-weight:500;">
+                {{ skill }}
+              </span>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Academic Journals -->
+          <div>
+            <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+              <i class="fas fa-book-open" style="color:var(--accent);"></i> Academic Research &amp; Publications
+            </h4>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              {% for journal in founder_journals %}
+              <div style="background:#fff;border-radius:14px;padding:20px;border:1.5px solid var(--mid);transition:all 0.3s;"
+                   onmouseover="this.style.borderColor='var(--accent)';this.style.boxShadow='0 8px 24px rgba(0,212,170,0.1)'"
+                   onmouseout="this.style.borderColor='var(--mid)';this.style.boxShadow='none'">
+                <div style="display:flex;align-items:flex-start;gap:14px;">
+                  <div style="width:40px;height:40px;border-radius:10px;background:rgba(0,212,170,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-file-alt" style="color:var(--accent);font-size:1rem;"></i>
+                  </div>
+                  <div style="flex:1;">
+                    <h5 style="font-family:var(--font-display);font-size:0.92rem;font-weight:700;color:var(--primary);margin-bottom:6px;line-height:1.4;">
+                      {{ journal.title }}
+                    </h5>
+                    <p style="font-size:0.8rem;color:var(--muted);margin-bottom:10px;">
+                      <i class="fas fa-journal-whills me-1" style="color:var(--accent);"></i>
+                      {{ journal.publisher }} &bull; {{ journal.year }}
+                    </p>
+                    <a href="{{ journal.link }}" target="_blank" rel="noopener noreferrer"
+                       style="display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-size:0.82rem;font-weight:600;text-decoration:none;background:rgba(0,212,170,0.08);padding:5px 12px;border-radius:6px;border:1px solid rgba(0,212,170,0.2);transition:all 0.2s;"
+                       onmouseover="this.style.background='var(--accent)';this.style.color='var(--primary)'"
+                       onmouseout="this.style.background='rgba(0,212,170,0.08)';this.style.color='var(--accent)'">
+                      <i class="fas fa-external-link-alt"></i> Read Full Paper
+                    </a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- VISION & MISSION -->
+<section style="background:#fff;padding:70px 2rem;">
+  <div class="container-fluid">
+    <div class="text-center mb-5">
+      <div class="section-tag">Direction</div>
+      <h2 class="section-title mt-2">Vision &amp; Mission</h2>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="sibrah-card h-100">
+          <div style="font-size:2rem;margin-bottom:12px;">🎯</div>
+          <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Our Vision</h3>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">To become a globally recognized technology hub delivering innovative digital solutions that empower individuals, businesses, and communities across Africa.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="sibrah-card h-100">
+          <div style="font-size:2rem;margin-bottom:12px;">🚀</div>
+          <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Our Mission</h3>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">To provide quality ICT services, training, and technology solutions that empower individuals and organizations to achieve their goals through the power of digital technology.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="sibrah-card h-100">
+          <div style="font-size:2rem;margin-bottom:12px;">📋</div>
+          <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:10px;">Our Approach</h3>
+          <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">We combine technical expertise with deep understanding of client needs to deliver customized, practical solutions that create real and measurable impact for every client we serve.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORE VALUES -->
 <section style="background:var(--primary);padding:70px 2rem;">
   <div class="container-fluid">
-    <div class="text-center mb-5"><div class="section-tag" style="background:rgba(0,212,170,0.1);">What Drives Us</div><h2 class="section-title mt-2" style="color:#fff;">Our Core Values</h2></div>
+    <div class="text-center mb-5">
+      <div class="section-tag" style="background:rgba(0,212,170,0.1);">What Drives Us</div>
+      <h2 class="section-title mt-2" style="color:#fff;">Our Core Values</h2>
+    </div>
     <div class="row g-3 justify-content-center">
-      {% for val in values %}<div class="col-md-2 col-4"><div style="background:var(--primary);border-radius:14px;padding:24px 16px;text-align:center;border:1px solid rgba(0,212,170,0.15);transition:all 0.3s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(0,212,170,0.15)'"><div style="font-size:1.8rem;margin-bottom:10px;">{{ val.icon }}</div><h4 style="font-family:var(--font-display);color:#fff;font-size:0.92rem;font-weight:700;margin:0;">{{ val.name }}</h4></div></div>{% endfor %}
+      {% for val in values %}
+      <div class="col-md-2 col-4">
+        <div style="background:rgba(255,255,255,0.05);border-radius:14px;padding:24px 16px;text-align:center;border:1px solid rgba(0,212,170,0.15);transition:all 0.3s;"
+             onmouseover="this.style.borderColor='var(--accent)';this.style.background='rgba(0,212,170,0.1)'"
+             onmouseout="this.style.borderColor='rgba(0,212,170,0.15)';this.style.background='rgba(255,255,255,0.05)'">
+          <div style="font-size:1.8rem;margin-bottom:10px;">{{ val.icon }}</div>
+          <h4 style="font-family:var(--font-display);color:#fff;font-size:0.92rem;font-weight:700;margin:0;">{{ val.name }}</h4>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
 </section>
+
+<!-- STATS -->
+<section style="background:linear-gradient(135deg,#00d4aa 0%,#0a9b7c 100%);padding:60px 2rem;">
+  <div class="container-fluid">
+    <div class="row g-3 text-center">
+      <div class="col-6 col-md-3"><div style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--primary);">500+</div><p style="color:rgba(10,37,64,0.7);font-size:0.88rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin:6px 0 0;">Satisfied Customers</p></div>
+      <div class="col-6 col-md-3"><div style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--primary);">100+</div><p style="color:rgba(10,37,64,0.7);font-size:0.88rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin:6px 0 0;">Projects Completed</p></div>
+      <div class="col-6 col-md-3"><div style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--primary);">300+</div><p style="color:rgba(10,37,64,0.7);font-size:0.88rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin:6px 0 0;">Students Trained</p></div>
+      <div class="col-6 col-md-3"><div style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--primary);">5+</div><p style="color:rgba(10,37,64,0.7);font-size:0.88rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin:6px 0 0;">Years Experience</p></div>
+    </div>
+  </div>
+</section>
+
 {% endblock %}

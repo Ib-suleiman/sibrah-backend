@@ -122,10 +122,43 @@ def home(request):
     })
 
 
+FOUNDER_SKILLS = [
+    'Software Development',
+    'Web Application Development',
+    'Artificial Intelligence',
+    'Machine Learning',
+    'Database Management',
+    'Data Analysis',
+    'Computer Systems Maintenance',
+    'IT Consultancy',
+    'IT Training',
+    'Digital Skills Development',
+    'Human Resource Management',
+    'Educational Administration',
+]
+
+FOUNDER_JOURNALS = [
+    {
+        'title':     "Key factors influencing students' academic performance",
+        'publisher': 'Springer — Journal of Electrical Systems and Information Technology',
+        'year':      '2024',
+        'link':      'https://link.springer.com/article/10.1186/s43067-024-00166-w',
+    },
+    {
+        'title':     'Performance of linear regression in predicting academic outcome',
+        'publisher': 'Springer — Journal of Electrical Systems and Information Technology',
+        'year':      '2026',
+        'link':      'https://link.springer.com/article/10.1186/s43067-026-00325-1',
+    },
+]
+
+
 def about(request):
     return render(request, 'core/about.html', {
-        'values':  VALUES,
-        'company': settings.SIBRAH_COMPANY,
+        'values':          VALUES,
+        'founder_skills':  FOUNDER_SKILLS,
+        'founder_journals': FOUNDER_JOURNALS,
+        'company':         settings.SIBRAH_COMPANY,
     })
 
 
